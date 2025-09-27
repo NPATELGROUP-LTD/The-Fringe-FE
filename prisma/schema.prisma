@@ -1,0 +1,201 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  role      UserRole @default(ADMIN)
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  students  Student[]
+  courses   Course[]
+
+  @@map("users")
+}
+
+model Student {
+  id              String           @id @default(cuid())
+  email           String           @unique
+  password        String?
+  name            String
+  phone           String?
+  enrollmentDate  DateTime         @default(now())
+  status          StudentStatus    @default(ACTIVE)
+  createdById     String
+  assignedCourseId String?
+  certificateUrl  String?
+  
+  // Relations
+  createdBy       User             @relation(fields: [createdById], references: [id])
+  assignedCourse  Course?          @relation(fields: [assignedCourseId], references: [id])
+  progress        CourseProgress[]
+  
+  @@map("students")
+}
+
+model Course {
+  id          String       @id @default(cuid())
+  title       String
+  description String
+  category    CourseType
+  isPublic    Boolean      @default(true)
+  duration    String
+  price       Float?
+  thumbnail   String?
+  status      CourseStatus @default(ACTIVE)
+  createdById String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  // Relations
+  createdBy   User             @relation(fields: [createdById], references: [id])
+  students    Student[]
+  modules     CourseModule[]
+  progress    CourseProgress[]
+
+  @@map("courses")
+}
+
+model CourseModule {
+  id          String      @id @default(cuid())
+  courseId    String
+  title       String
+  description String?
+  content     String?
+  videoUrl    String?
+  duration    Int?        // in minutes
+  order       Int
+  isRequired  Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  // Relations
+  course      Course            @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  progress    ModuleProgress[]
+
+  @@map("course_modules")
+}
+
+model CourseProgress {
+  id            String   @id @default(cuid())
+  studentId     String
+  courseId      String
+  completedAt   DateTime?
+  lastAccessedAt DateTime @default(now())
+  progressPercent Float   @default(0)
+
+  // Relations
+  student       Student           @relation(fields: [studentId], references: [id])
+  course        Course            @relation(fields: [courseId], references: [id])
+  moduleProgress ModuleProgress[]
+
+  @@unique([studentId, courseId])
+  @@map("course_progress")
+}
+
+model ModuleProgress {
+  id                String   @id @default(cuid())
+  courseProgressId  String
+  moduleId          String
+  completedAt       DateTime?
+  watchTimeSeconds  Int      @default(0)
+  lastPosition      Int      @default(0) // for video resume
+  
+  // Relations
+  courseProgress    CourseProgress @relation(fields: [courseProgressId], references: [id])
+  module            CourseModule   @relation(fields: [moduleId], references: [id])
+
+  @@unique([courseProgressId, moduleId])
+  @@map("module_progress")
+}
+
+model Service {
+  id          String        @id @default(cuid())
+  title       String
+  description String
+  category    ServiceCategory
+  price       Float?
+  duration    String?
+  image       String?
+  isActive    Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@map("services")
+}
+
+model NewsletterSubscriber {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  name        String?
+  isActive    Boolean  @default(true)
+  subscribedAt DateTime @default(now())
+  unsubscribedAt DateTime?
+
+  @@map("newsletter_subscribers")
+}
+
+model TeamMember {
+  id          String   @id @default(cuid())
+  name        String
+  title       String
+  bio         String?
+  image       String?
+  rating      Float?   @default(5.0)
+  specialties String[]
+  isActive    Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("team_members")
+}
+
+// Enums
+enum UserRole {
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum StudentStatus {
+  ACTIVE
+  INACTIVE
+  GRADUATED
+  SUSPENDED
+}
+
+enum CourseType {
+  PUBLIC
+  ACADEMY
+  PROFESSIONAL
+  MASTERCLASS
+}
+
+enum CourseStatus {
+  ACTIVE
+  INACTIVE
+  DRAFT
+  ARCHIVED
+}
+
+enum ServiceCategory {
+  HAIR_STYLING
+  HAIR_COLORING
+  MAKEUP
+  NAIL_ART
+  SKINCARE
+  SPECIAL_OCCASION
+}
