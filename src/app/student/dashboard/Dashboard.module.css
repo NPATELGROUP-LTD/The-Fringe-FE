@@ -1,0 +1,358 @@
+.dashboard {
+    min-height: 100vh;
+    padding: var(--spacing-xl);
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+}
+
+.noCourse {
+    text-align: center;
+    padding: var(--spacing-3xl);
+}
+
+.noCourse h2 {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text-primary);
+}
+
+.noCourse p {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+}
+
+/* Course Header */
+.courseHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-3xl);
+    padding: var(--spacing-xl);
+    background: var(--color-card-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-card-border);
+}
+
+.courseInfo {
+    flex: 1;
+}
+
+.courseTitle {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-primary);
+}
+
+.courseDescription {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+}
+
+.progressOverview {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.progressCircle {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-full);
+    background: conic-gradient(var(--color-text-primary) calc(var(--progress, 0) * 1%), var(--color-border) 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.progressCircle::before {
+    content: '';
+    width: 60px;
+    height: 60px;
+    background: var(--color-card-bg);
+    border-radius: var(--radius-full);
+    position: absolute;
+}
+
+.progressValue {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    z-index: 1;
+}
+
+.progressText p {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.progressText span {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+}
+
+/* Content Layout */
+.content {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: var(--spacing-2xl);
+}
+
+/* Modules List */
+.modulesList {
+    background: var(--color-card-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-card-border);
+    padding: var(--spacing-xl);
+    height: fit-content;
+}
+
+.sectionTitle {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text-primary);
+}
+
+.modules {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.moduleItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    border: 2px solid transparent;
+}
+
+.moduleItem:hover {
+    background: var(--color-tertiary-bg);
+    border-color: var(--color-border-hover);
+}
+
+.moduleItem.active {
+    background: var(--color-tertiary-bg);
+    border-color: var(--color-text-primary);
+}
+
+.moduleItem.completed {
+    opacity: 0.7;
+}
+
+.moduleNumber {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    background: var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    flex-shrink: 0;
+}
+
+.moduleItem.active .moduleNumber {
+    background: var(--color-text-primary);
+    color: var(--color-primary-bg);
+}
+
+.moduleContent {
+    flex: 1;
+}
+
+.moduleTitle {
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text-primary);
+}
+
+.moduleDuration {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.moduleStatus {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+}
+
+.moduleItem.completed .moduleStatus {
+    color: #10b981;
+}
+
+/* Video Section */
+.videoSection {
+    background: var(--color-card-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-card-border);
+    padding: var(--spacing-xl);
+}
+
+.videoHeader {
+    margin-bottom: var(--spacing-xl);
+}
+
+.videoHeader .moduleTitle {
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-primary);
+}
+
+.moduleDescription {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+}
+
+.noVideo {
+    text-align: center;
+    padding: var(--spacing-3xl);
+}
+
+.noVideo h3 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text-primary);
+}
+
+.moduleContentText {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    white-space: pre-wrap;
+}
+
+.selectModule {
+    text-align: center;
+    padding: var(--spacing-3xl);
+}
+
+.selectModule h3 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-primary);
+}
+
+.selectModule p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+}
+
+/* Certificate Section */
+.certificateSection {
+    margin-top: var(--spacing-3xl);
+}
+
+.certificateCard {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xl);
+    padding: var(--spacing-xl);
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-lg);
+}
+
+.certificateIcon {
+    font-size: var(--font-size-5xl);
+}
+
+.certificateContent h3 {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-primary);
+}
+
+.certificateContent p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xl);
+    }
+
+    .courseHeader {
+        flex-direction: column;
+        gap: var(--spacing-lg);
+        align-items: stretch;
+    }
+
+    .progressOverview {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard {
+        padding: var(--spacing-md);
+    }
+
+    .courseTitle {
+        font-size: var(--font-size-2xl);
+    }
+
+    .courseDescription {
+        font-size: var(--font-size-base);
+    }
+
+    .progressCircle {
+        width: 60px;
+        height: 60px;
+    }
+
+    .progressCircle::before {
+        width: 45px;
+        height: 45px;
+    }
+
+    .progressValue {
+        font-size: var(--font-size-base);
+    }
+
+    .certificateCard {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .modulesList,
+    .videoSection {
+        padding: var(--spacing-md);
+    }
+
+    .moduleItem {
+        padding: var(--spacing-sm);
+    }
+
+    .videoHeader .moduleTitle {
+        font-size: var(--font-size-xl);
+    }
+}

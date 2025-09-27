@@ -1,0 +1,210 @@
+.dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    margin-bottom: var(--spacing-3xl);
+}
+
+.title {
+    font-size: var(--font-size-4xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-lg);
+}
+
+/* Stats Grid */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-3xl);
+}
+
+.statCard {
+    padding: var(--spacing-xl);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    transition: all var(--transition-normal);
+}
+
+.statCard:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-border-hover);
+}
+
+.statIcon {
+    font-size: var(--font-size-3xl);
+    background-color: var(--color-tertiary-bg);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+}
+
+.statContent {
+    flex: 1;
+}
+
+.statNumber {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.statLabel {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Sections */
+.sectionTitle {
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-xl);
+}
+
+/* Quick Actions */
+.quickActions {
+    margin-bottom: var(--spacing-3xl);
+}
+
+.actionsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.actionCard {
+    padding: var(--spacing-xl);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    text-decoration: none;
+    transition: all var(--transition-normal);
+}
+
+.actionCard:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-text-primary);
+}
+
+.actionIcon {
+    font-size: var(--font-size-2xl);
+    background-color: var(--color-text-primary);
+    color: var(--color-primary-bg);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+}
+
+.actionContent h3 {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.actionContent p {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+/* Recent Activity */
+.recentActivity {
+    margin-bottom: var(--spacing-3xl);
+}
+
+.activityCard {
+    padding: var(--spacing-xl);
+}
+
+.activityList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.activityItem {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background-color: var(--color-secondary-bg);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+}
+
+.activityIcon {
+    font-size: var(--font-size-lg);
+    background-color: var(--color-tertiary-bg);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+}
+
+.activityContent {
+    flex: 1;
+}
+
+.activityText {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xs);
+    line-height: 1.5;
+}
+
+.activityTime {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.noActivity {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    color: var(--color-text-secondary);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .statsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .actionsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .title {
+        font-size: var(--font-size-3xl);
+    }
+
+    .statCard,
+    .actionCard {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing-md);
+    }
+
+    .activityItem {
+        flex-direction: column;
+        text-align: center;
+    }
+}

@@ -1,0 +1,257 @@
+.certificatePage {
+    padding: var(--spacing-xl);
+    min-height: 100vh;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+}
+
+.header {
+    text-align: center;
+    margin-bottom: var(--spacing-3xl);
+}
+
+.title {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-primary);
+}
+
+.subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+}
+
+.certificateContainer {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.certificateCard {
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-2xl);
+    text-align: center;
+}
+
+.certificatePreview {
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    color: #000;
+    padding: var(--spacing-3xl);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-2xl);
+    border: 3px solid var(--color-text-primary);
+}
+
+.certificateHeader {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.certificateHeader h2 {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    margin-bottom: var(--spacing-lg);
+    color: #000;
+}
+
+.logo {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: #666;
+}
+
+.certificateBody {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.certificateText {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-md);
+    color: #333;
+}
+
+.studentName {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    margin: var(--spacing-lg) 0;
+    color: #000;
+    text-decoration: underline;
+}
+
+.courseName {
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    margin: var(--spacing-lg) 0;
+    color: #000;
+    font-style: italic;
+}
+
+.completionDate {
+    font-size: var(--font-size-base);
+    color: #666;
+    margin-top: var(--spacing-lg);
+}
+
+.certificateFooter {
+    margin-top: var(--spacing-2xl);
+}
+
+.signature {
+    text-align: right;
+    margin-right: var(--spacing-3xl);
+}
+
+.signatureLine {
+    width: 200px;
+    height: 2px;
+    background: #000;
+    margin: 0 0 var(--spacing-sm) auto;
+}
+
+.signature p {
+    font-size: var(--font-size-sm);
+    color: #666;
+}
+
+.certificateActions {
+    display: flex;
+    gap: var(--spacing-lg);
+    justify-content: center;
+}
+
+.progressCard {
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-2xl);
+    text-align: center;
+}
+
+.progressHeader h2 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-primary);
+}
+
+.progressHeader p {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.progressDetails {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-2xl);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.progressCircle {
+    position: relative;
+}
+
+.progressRing {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.progressInner {
+    width: 90px;
+    height: 90px;
+    background: var(--color-card-bg);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progressPercent {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.progressInfo {
+    text-align: left;
+}
+
+.progressInfo h3 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-primary);
+}
+
+.progressInfo p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.remainingModules p {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
+
+.encouragement {
+    padding: var(--spacing-xl);
+    background: var(--color-tertiary-bg);
+    border-radius: var(--radius-lg);
+    margin-top: var(--spacing-xl);
+}
+
+.encouragement p {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text-secondary);
+}
+
+@media (max-width: 768px) {
+    .certificatePage {
+        padding: var(--spacing-md);
+    }
+
+    .certificatePreview {
+        padding: var(--spacing-xl);
+    }
+
+    .certificateActions {
+        flex-direction: column;
+    }
+
+    .progressDetails {
+        flex-direction: column;
+        gap: var(--spacing-lg);
+    }
+
+    .progressInfo {
+        text-align: center;
+    }
+}
+
+@media print {
+
+    .certificateActions,
+    .header,
+    .encouragement {
+        display: none;
+    }
+
+    .certificatePreview {
+        box-shadow: none;
+        border: 2px solid #000;
+    }
+}

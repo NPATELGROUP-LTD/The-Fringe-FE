@@ -1,0 +1,289 @@
+.bookNowPage {
+  padding-top: 100px;
+  min-height: 100vh;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: var(--spacing-3xl);
+  padding: var(--spacing-3xl) 0;
+}
+
+.pageTitle {
+  font-size: var(--font-size-5xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.pageSubtitle {
+  font-size: var(--font-size-xl);
+  color: var(--color-text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.bookingContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-3xl);
+  margin-bottom: var(--spacing-3xl);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-xl);
+}
+
+/* Booking Options */
+.bookingOptions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.optionCard {
+  background-color: var(--color-tertiary-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  display: flex;
+  gap: var(--spacing-lg);
+  transition: all var(--transition-normal);
+}
+
+.optionCard:hover {
+  border-color: var(--color-border-hover);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.optionIcon {
+  font-size: var(--font-size-3xl);
+  flex-shrink: 0;
+  margin-top: var(--spacing-xs);
+}
+
+.optionContent h3 {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.optionContent p {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-md);
+  line-height: 1.6;
+}
+
+.contactDetails {
+  background-color: var(--color-secondary-bg);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.contactDetails strong {
+  color: var(--color-text-primary);
+}
+
+.hours,
+.textInstructions,
+.walkInNote {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+  font-style: italic;
+}
+
+/* Services Info */
+.servicesInfo {
+  background-color: var(--color-tertiary-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+}
+
+.servicesList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.serviceItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md);
+  background-color: var(--color-secondary-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.serviceDetails h4 {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.serviceDetails p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.servicePrice {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--spacing-xs);
+}
+
+.duration {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}
+
+.price {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.viewAllServices {
+  text-align: center;
+}
+
+/* Booking Tips */
+.bookingTips {
+  margin-bottom: var(--spacing-3xl);
+}
+
+.tipsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-xl);
+}
+
+.tip {
+  background-color: var(--color-tertiary-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  text-align: center;
+  transition: all var(--transition-normal);
+}
+
+.tip:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-border-hover);
+}
+
+.tipIcon {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--spacing-md);
+}
+
+.tip h3 {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.tip p {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* Contact CTA */
+.contactCta {
+  text-align: center;
+  padding: var(--spacing-3xl);
+  background-color: var(--color-secondary-bg);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+}
+
+.contactCta h2 {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.contactCta p {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-xl);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ctaButtons {
+  display: flex;
+  gap: var(--spacing-lg);
+  justify-content: center;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .bookingContainer {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-2xl);
+  }
+
+  .pageTitle {
+    font-size: var(--font-size-4xl);
+  }
+
+  .optionCard {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--spacing-md);
+  }
+
+  .serviceItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+  }
+
+  .servicePrice {
+    align-items: flex-start;
+    flex-direction: row;
+    gap: var(--spacing-lg);
+  }
+
+  .tipsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .ctaButtons {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .bookNowPage {
+    padding-top: 80px;
+  }
+
+  .hero {
+    padding: var(--spacing-2xl) 0;
+  }
+
+  .optionCard,
+  .servicesInfo,
+  .tip,
+  .contactCta {
+    padding: var(--spacing-lg);
+  }
+}

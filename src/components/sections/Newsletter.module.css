@@ -1,0 +1,116 @@
+.newsletter {
+    background-color: var(--color-primary-bg);
+    margin-bottom: 150px;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-3xl);
+    align-items: center;
+}
+
+.textContent {
+    padding-right: var(--spacing-xl);
+}
+
+.title {
+    font-size: var(--font-size-4xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.description {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-xl);
+}
+
+.benefits {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.benefits li {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+    font-size: var(--font-size-base);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.formContainer {
+    background: var(--color-tertiary-bg);
+    padding: var(--spacing-2xl);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.message {
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+    font-weight: 500;
+}
+
+.message.success {
+    background: rgba(208, 180, 159, 0.1);
+    border: 1px solid rgba(208, 180, 159, 0.3);
+    border-radius: 12px;
+    color: var(--color-accent-primary);
+}
+
+.message.error {
+    background: rgba(108, 117, 125, 0.1);
+    border: 1px solid rgba(108, 117, 125, 0.3);
+    border-radius: 12px;
+    color: var(--color-text-secondary);
+}
+
+.form {
+    width: 100%;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.nameInput,
+.emailInput {
+    flex: 1;
+}
+
+.privacy {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    text-align: center;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-2xl);
+    }
+
+    .textContent {
+        padding-right: 0;
+        text-align: center;
+    }
+
+    .title {
+        font-size: var(--font-size-3xl);
+    }
+
+    .inputGroup {
+        flex-direction: column;
+    }
+}

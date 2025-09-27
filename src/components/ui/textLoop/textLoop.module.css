@@ -1,0 +1,33 @@
+.scrollContainer {
+    width: 100%;
+    overflow: hidden;
+    background: rgb(255, 255, 255);
+}
+
+.scrollTrack {
+    display: flex;
+    width: max-content;
+    /* track grows based on content */
+    animation: scroll 20s linear infinite;
+}
+
+.word {
+    flex-shrink: 0;
+    /* prevent squishing */
+    margin: 2rem 3rem;
+    /* space between words */
+    font-size: 2rem;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-33.333%);
+        /* move by one full set of words */
+    }
+}

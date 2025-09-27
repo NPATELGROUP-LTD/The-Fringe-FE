@@ -1,0 +1,349 @@
+/* ==============================================
+   CSS CUSTOM PROPERTIES (Variables)
+   ============================================== */
+:root {
+    --color-primary: #ffffff;
+    --color-dark: #000000;
+    --transition: all 0.2s ease;
+    --animation-duration: 0.4s;
+    --border-radius: 5px;
+    --shadow: 2px 0 8px rgba(0, 0, 0, 0.04);
+}
+
+/* ==============================================
+   HEADER LAYOUT
+   ============================================== */
+.headerSpacer {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 35px 25px;
+    color: var(--color-primary);
+    position: fixed;
+    z-index: 100;
+    background: var(--color-dark);
+}
+
+.headerContainer {
+    width: 75%;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+
+/* Hide header when menu is open */
+.headerHidden {
+    display: none !important;
+}
+
+/* ==============================================
+   HEADER ELEMENTS
+   ============================================== */
+.headerLogo_container img {
+    height: 80px;
+    width: 80px;
+}
+
+.headerLinks {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+
+/* Button Base Styles */
+.headerCTA_button {
+    padding: 5px 15px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 2.2rem;
+    font-weight: 500;
+    transition: var(--transition);
+    color: var(--color-primary);
+    background-color: var(--color-dark);
+    border: var(--color-primary) 2px solid;
+
+}
+
+.headerCTA_button:hover {
+    color: var(--color-dark);
+    background-color: var(--color-primary);
+    border: var(--color-dark) 2px solid;
+}
+
+.headerMenu_button {
+    padding: 7px 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-dark);
+    background-color: var(--color-primary);
+    font-size: 2rem;
+    transition: var(--transition);
+    border-radius: var(--border-radius);
+    border: var(--color-dark) 2px solid;
+}
+
+.headerMenu_button:hover {
+    color: var(--color-primary);
+    background-color: var(--color-dark);
+    border: var(--color-primary) 2px solid;
+}
+
+/* ==============================================
+   NAVIGATION POPUP
+   ============================================== */
+.headerNav_popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    z-index: 100;
+    overflow: hidden;
+}
+
+.headerNav_popup_left {
+    width: 70vw;
+    height: 100vh;
+    background: var(--color-dark);
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.headerNav_popup_right {
+    width: 30vw;
+    height: 100vh;
+    background: var(--color-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* ==============================================
+   POPUP CONTENT
+   ============================================== */
+.headerNav_popup_logo_container {
+    position: absolute;
+    top: 20px;
+    left: 40px;
+    z-index: 101;
+}
+
+.headerNav_popup_logo_container img {
+    height: 80px;
+    width: 80px;
+}
+
+.headerNav_popup_close_container {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    z-index: 101;
+}
+
+.headerNav_popup_close_button {
+    background: none;
+    border: none;
+    font-size: 2.5rem;
+    color: var(--color-dark);
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.headerNav_popup_close_button:hover {
+    background: var(--color-dark);
+    color: var(--color-primary);
+}
+
+.headerNav_popup_left_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.headerNav_popup_left_content_top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.headerNav_popup_left_content_top p {
+    font-size: 40rem;
+    font-weight: 500;
+    color: #Fff;
+    opacity: 1;
+    letter-spacing: -15px;
+}
+
+.headerNav_popup_left_content_top_p_firstLetter {
+    display: inline-block;
+    transform: scaleY(1.5) translateY(6.5%);
+    transform-origin: bottom;
+
+}
+
+.headerNav_popup_left_content_top h1 {
+    font-size: 15rem;
+    font-weight: 200;
+    color: #fff;
+    letter-spacing: -10px;
+    position: absolute;
+    top: 425px;
+    left: 825px;
+}
+
+/* ==============================================
+   ANIMATIONS
+   ============================================== */
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutLeft {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+.slideInLeft {
+    animation: slideInLeft var(--animation-duration) forwards;
+}
+
+.slideOutLeft {
+    animation: slideOutLeft var(--animation-duration) forwards;
+}
+
+.slideInRight {
+    animation: slideInRight var(--animation-duration) forwards;
+}
+
+.slideOutRight {
+    animation: slideOutRight var(--animation-duration) forwards;
+}
+
+/* ==============================================
+   RESPONSIVE DESIGN
+   ============================================== */
+@media (max-width: 1200px) {
+    .headerName {
+        font-size: 2.5rem;
+    }
+
+    .headerCTA_button {
+        font-size: 1.8rem;
+        padding: 8px 16px;
+    }
+
+    .headerMenu_button {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 2560px) {
+    .headerNav_popup_left_content_top p {
+        font-size: 28rem;
+        margin: 250px 0 -20px 25px;
+    }
+}
+
+@media (max-width: 900px) {
+    .headerContainer {
+        width: 95%;
+    }
+
+    .headerCTA_button.headerCTA_header {
+        display: none !important;
+    }
+
+    .headerNav_popup {
+        flex-direction: column;
+    }
+
+    .headerNav_popup_left {
+        display: none !important;
+    }
+
+    .headerNav_popup_right {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .headerNav_popup_close_container {
+        top: 24px;
+        right: 24px;
+    }
+
+    .headerNav_popup_close_button {
+        font-size: 2rem;
+        padding: 8px 16px;
+        border-radius: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .headerContainer {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .headerNav_popup_close_button {
+        font-size: 1.5rem;
+        padding: 6px 12px;
+        border-radius: 20px;
+    }
+}

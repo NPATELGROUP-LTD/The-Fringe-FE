@@ -1,0 +1,221 @@
+.myCoursePage {
+    padding: var(--spacing-xl);
+    min-height: 100vh;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+}
+
+.noCourse {
+    text-align: center;
+    padding: var(--spacing-3xl);
+}
+
+.noCourse h2 {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text-primary);
+}
+
+.courseHeader {
+    margin-bottom: var(--spacing-3xl);
+}
+
+.courseTitle {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-primary);
+}
+
+.courseDescription {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xl);
+    line-height: 1.6;
+}
+
+.progressOverview {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.progressBar {
+    flex: 1;
+    max-width: 300px;
+    height: 8px;
+    background: var(--color-border);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-text-primary) 0%, var(--color-text-secondary) 100%);
+    transition: width var(--transition-normal);
+}
+
+.progressText {
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.courseContent {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: var(--spacing-2xl);
+}
+
+.modulesList {
+    background: var(--color-card-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-card-border);
+    padding: var(--spacing-xl);
+    height: fit-content;
+}
+
+.modulesList h2 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text-primary);
+}
+
+.moduleItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    border: 2px solid transparent;
+    margin-bottom: var(--spacing-sm);
+}
+
+.moduleItem:hover {
+    background: var(--color-tertiary-bg);
+    border-color: var(--color-border-hover);
+}
+
+.moduleItem.active {
+    background: var(--color-tertiary-bg);
+    border-color: var(--color-text-primary);
+}
+
+.moduleItem.completed {
+    opacity: 0.7;
+}
+
+.moduleNumber {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    background: var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    flex-shrink: 0;
+}
+
+.moduleItem.active .moduleNumber {
+    background: var(--color-text-primary);
+    color: var(--color-primary-bg);
+}
+
+.moduleContent h3 {
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text-primary);
+}
+
+.moduleContent p {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.moduleStatus {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+}
+
+.moduleItem.completed .moduleStatus {
+    color: #10b981;
+}
+
+.videoSection {
+    background: var(--color-card-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-card-border);
+    padding: var(--spacing-xl);
+}
+
+.videoSection h2 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-primary);
+}
+
+.moduleDescription {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xl);
+    line-height: 1.6;
+}
+
+.textContent {
+    text-align: center;
+    padding: var(--spacing-2xl);
+}
+
+.textContent h3 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text-primary);
+}
+
+.contentText {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    white-space: pre-wrap;
+}
+
+.selectModule {
+    text-align: center;
+    padding: var(--spacing-3xl);
+}
+
+.selectModule h3 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-primary);
+}
+
+@media (max-width: 1024px) {
+    .courseContent {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .myCoursePage {
+        padding: var(--spacing-md);
+    }
+
+    .progressOverview {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-md);
+    }
+}

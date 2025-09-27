@@ -1,0 +1,238 @@
+.contactPage {
+    padding-top: 100px;
+    min-height: 100vh;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: var(--spacing-3xl);
+    padding: var(--spacing-3xl) 0;
+}
+
+.pageTitle {
+    font-size: var(--font-size-5xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.pageSubtitle {
+    font-size: var(--font-size-xl);
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contactContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-3xl);
+    margin-bottom: var(--spacing-3xl);
+}
+
+.sectionTitle {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-xl);
+}
+
+/* Contact Info Styles */
+.contactInfo {
+    padding: var(--spacing-xl);
+}
+
+.infoCard {
+    background-color: var(--color-tertiary-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+.infoItem {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.infoItem:last-child {
+    margin-bottom: 0;
+}
+
+.infoIcon {
+    font-size: var(--font-size-2xl);
+    flex-shrink: 0;
+    margin-top: var(--spacing-xs);
+}
+
+.infoContent h3 {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.infoContent p {
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+}
+
+.emergencyContact {
+    background-color: var(--color-secondary-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.emergencyContact h3 {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.emergencyContact p {
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+}
+
+.emergencyContact strong {
+    color: var(--color-text-primary);
+}
+
+/* Contact Form Styles */
+.contactForm {
+    background-color: var(--color-tertiary-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+}
+
+.successMessage {
+    background-color: rgba(76, 175, 80, 0.1);
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.successMessage p {
+    color: #4CAF50;
+    margin: 0;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.formGroup label {
+    font-weight: 600;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+    resize: vertical;
+}
+
+.submitButton {
+    width: 100%;
+    margin-top: var(--spacing-md);
+}
+
+.submitButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* FAQ Styles */
+.faqSection {
+    padding: var(--spacing-3xl) 0;
+    border-top: 1px solid var(--color-border);
+}
+
+.faqGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--spacing-xl);
+}
+
+.faqItem {
+    background-color: var(--color-tertiary-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    transition: all var(--transition-normal);
+}
+
+.faqItem:hover {
+    border-color: var(--color-border-hover);
+    transform: translateY(-2px);
+}
+
+.faqItem h3 {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.faqItem p {
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .contactContainer {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-2xl);
+    }
+
+    .pageTitle {
+        font-size: var(--font-size-4xl);
+    }
+
+    .contactInfo,
+    .contactForm {
+        padding: var(--spacing-lg);
+    }
+
+    .infoItem {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing-md);
+    }
+
+    .faqGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .contactPage {
+        padding-top: 80px;
+    }
+
+    .hero {
+        padding: var(--spacing-2xl) 0;
+    }
+
+    .infoCard,
+    .emergencyContact,
+    .contactForm {
+        padding: var(--spacing-md);
+    }
+}

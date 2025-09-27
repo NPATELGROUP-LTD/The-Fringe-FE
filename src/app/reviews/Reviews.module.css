@@ -1,0 +1,303 @@
+.reviewsPage {
+    min-height: 100vh;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+}
+
+/* Hero Section */
+.hero {
+    padding: calc(80px + var(--spacing-3xl)) 0 var(--spacing-3xl);
+    text-align: center;
+    background: var(--gradient-primary);
+}
+
+.title {
+    font-size: var(--font-size-5xl);
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    font-size: var(--font-size-xl);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-3xl);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-3xl);
+    margin-top: var(--spacing-3xl);
+}
+
+.statItem {
+    text-align: center;
+}
+
+.statNumber {
+    font-size: var(--font-size-4xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.statStars {
+    margin-bottom: var(--spacing-sm);
+}
+
+.statLabel {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Filter Section */
+.filters {
+    padding: var(--spacing-3xl) 0;
+    background: var(--color-secondary-bg);
+}
+
+.filterButtons {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.filterBtn {
+    background: transparent;
+    border: 2px solid var(--color-border);
+    color: var(--color-text-secondary);
+    padding: var(--spacing-sm) var(--spacing-xl);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    font-weight: 500;
+}
+
+.filterBtn:hover {
+    border-color: var(--color-text-primary);
+    color: var(--color-text-primary);
+    transform: translateY(-2px);
+}
+
+.filterBtn.active {
+    background: var(--color-text-primary);
+    color: var(--color-primary-bg);
+    border-color: var(--color-text-primary);
+}
+
+/* Reviews Section */
+.reviewsSection {
+    padding: var(--spacing-3xl) 0;
+}
+
+.reviewsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--spacing-2xl);
+}
+
+.reviewCard {
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    transition: all var(--transition-normal);
+    height: fit-content;
+}
+
+.reviewCard:hover {
+    border-color: var(--color-border-hover);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.reviewHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-lg);
+}
+
+.reviewerInfo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.reviewerAvatar {
+    width: 50px;
+    height: 50px;
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.reviewerAvatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatarPlaceholder {
+    width: 100%;
+    height: 100%;
+    background: var(--gradient-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: var(--color-primary-bg);
+    font-size: var(--font-size-lg);
+}
+
+.reviewerDetails {
+    flex: 1;
+}
+
+.reviewerName {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.reviewService {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.reviewRating {
+    display: flex;
+    gap: 2px;
+}
+
+.star {
+    font-size: var(--font-size-lg);
+    color: var(--color-border);
+    transition: color var(--transition-fast);
+}
+
+.star.filled {
+    color: #fbbf24;
+}
+
+.reviewContent {
+    margin-bottom: var(--spacing-lg);
+}
+
+.reviewComment {
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    font-style: italic;
+}
+
+.reviewFooter {
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--spacing-md);
+}
+
+.reviewDate {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* Call to Action */
+.cta {
+    padding: var(--spacing-3xl) 0;
+    background: var(--color-tertiary-bg);
+}
+
+.ctaContent {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.ctaContent h2 {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-primary);
+}
+
+.ctaContent p {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xl);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .title {
+        font-size: var(--font-size-4xl);
+    }
+
+    .subtitle {
+        font-size: var(--font-size-lg);
+    }
+
+    .stats {
+        flex-direction: column;
+        gap: var(--spacing-xl);
+    }
+
+    .reviewsGrid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+
+    .filterButtons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filterBtn {
+        width: 200px;
+    }
+
+    .reviewHeader {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        align-items: flex-start;
+    }
+
+    .reviewRating {
+        align-self: flex-end;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: calc(80px + var(--spacing-2xl)) 0 var(--spacing-2xl);
+    }
+
+    .title {
+        font-size: var(--font-size-3xl);
+    }
+
+    .reviewCard {
+        padding: var(--spacing-lg);
+    }
+
+    .ctaContent h2 {
+        font-size: var(--font-size-2xl);
+    }
+}
