@@ -1,6 +1,13 @@
 .servicesPage {
+    /* Layout */
     padding-top: 100px;
     min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
 }
 
 .hero {
@@ -23,30 +30,178 @@
     margin: 0 auto;
 }
 
+/* Filters / Search */
 .filters {
     display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xl);
+    gap: var(--spacing-md);
+    justify-content: center;
     margin-bottom: var(--spacing-3xl);
-    padding: var(--spacing-xl);
-    background-color: var(--color-tertiary-bg);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--color-border);
-}
-
-.searchContainer {
-    flex: 1;
-}
-
-.searchInput {
-    width: 100%;
-    max-width: 400px;
+    flex-wrap: wrap;
 }
 
 .categoryFilters {
     display: flex;
     gap: var(--spacing-md);
     flex-wrap: wrap;
+}
+
+/* Right-aligned dropdown for filters */
+.filterDropdown {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    position: relative;
+    /* anchor the absolute dropdown to this container */
+}
+
+/* when dropdown is open rotate the caret and slightly elevate the trigger */
+.filterDropdown.open .filterButton::after {
+    transform: rotate(180deg);
+}
+
+/* extra spacing so search and category buttons sit at opposite ends */
+.filters {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: space-between;
+    /* push items to ends */
+    margin-bottom: var(--spacing-3xl);
+    flex-wrap: wrap;
+}
+
+.filterSelect {
+    background: var(--color-card-bg);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+}
+
+/* Multi-select dropdown styles */
+.filterButton {
+    background: transparent;
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+}
+
+.filterButton::after {
+    /* small caret */
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 6px;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid var(--color-text-primary);
+    transform-origin: center;
+    transition: transform 150ms ease;
+}
+
+.dropdownMenu {
+    position: absolute;
+    top: calc(100% + var(--spacing-xs));
+    right: 0;
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm);
+    z-index: 50;
+    min-width: 260px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    transition: opacity 140ms ease, transform 140ms ease;
+}
+
+.dropdownHeader {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: space-between;
+    margin-bottom: var(--spacing-sm);
+}
+
+.dropdownList {
+    max-height: 260px;
+    overflow-y: auto;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    scrollbar-width: thin;
+}
+
+.dropdownList li {
+    padding: var(--spacing-xs) 0;
+}
+
+.dropdownList label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+    color: var(--color-text-primary);
+}
+
+.dropdownList input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+}
+
+.dropdownList li+li {
+    margin-top: var(--spacing-xs);
+    /* gap between options */
+}
+
+.dropdownLabelText {
+    display: inline-block;
+}
+
+/* option hover and active styles */
+.dropdownList li:hover {
+    background: var(--color-tertiary-bg);
+    border-radius: calc(var(--radius-sm));
+}
+
+/* checked option visuals */
+.dropdownList input[type="checkbox"]:checked+.dropdownLabelText,
+.dropdownList input[type="checkbox"]:checked~.dropdownLabelText {
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+/* larger tap targets on mobile */
+@media (max-width: 480px) {
+    .dropdownList label {
+        padding: var(--spacing-sm) 0;
+    }
+
+    .dropdownMenu {
+        min-width: 100%;
+        padding: var(--spacing-md);
+    }
+}
+
+/* Mobile: make dropdown full width under filters */
+@media (max-width: 768px) {
+    .filterDropdown {
+        width: 100%;
+        margin-left: 0;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .dropdownMenu {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        margin-top: var(--spacing-sm);
+        border-radius: var(--radius-md);
+    }
 }
 
 .categoryButton {
@@ -56,12 +211,13 @@
     border-radius: var(--radius-md);
     color: var(--color-text-secondary);
     cursor: pointer;
-    transition: all var(--transition-normal);
+    transition: var(--transition-normal);
     font-size: var(--font-size-sm);
 }
 
 .categoryButton:hover {
-    border-color: var(--color-text-primary);
+    transform: translateY(-2px);
+    border-color: var(--color-border-hover);
     color: var(--color-text-primary);
 }
 
@@ -71,6 +227,24 @@
     border-color: var(--color-text-primary);
 }
 
+.searchContainer {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    max-width: 420px;
+}
+
+.searchInput {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-card-bg);
+    color: var(--color-text-primary);
+}
+
+/* Grid */
 .servicesGrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -78,14 +252,20 @@
     margin-bottom: var(--spacing-3xl);
 }
 
+/* Card */
 .serviceCard {
     overflow: hidden;
-    transition: all var(--transition-normal);
+    transition: var(--transition-normal);
     position: relative;
+    border: 2px solid var(--color-text-primary);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-primary-bg);
+    box-shadow: var(--shadow);
 }
 
 .serviceCard:hover {
     transform: translateY(-8px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
 }
 
 .serviceImage {
@@ -125,7 +305,8 @@
 }
 
 .serviceContent {
-    padding: var(--spacing-xl);
+    padding: calc(var(--spacing-xl) - 2px);
+    /* Adjust for border width */
 }
 
 .serviceTitle {
@@ -150,6 +331,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.serviceFeatures ul li {
+    list-style-type: none;
+    font-size: 1rem;
+    color: #e6e6e6;
+    padding-left: 10px;
 }
 
 .duration {

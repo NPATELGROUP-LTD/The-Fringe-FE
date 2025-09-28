@@ -1,199 +1,101 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "../../components/layout/Layout";
 import styles from "./Courses.module.css";
+import { coursesService } from "@/services/courses.service";
+import type { Course } from "@/services/courses.service";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function CoursesPage() {
-  const [selectedCategory, setSelectedCategory] = useState("ALL");
-  const [selectedCourse, setSelectedCourse] = useState<any>(null);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const { user, isAuthenticated } = useAuth();
 
-  const courses = [
-    {
-      id: 1,
-      title: "Professional Hair Styling Certification",
-      description:
-        "Comprehensive course covering cutting, styling, and finishing techniques",
-      category: "PROFESSIONAL",
-      isPublic: true,
-      duration: "12 weeks",
-      price: 2500,
-      thumbnail: "/images/courses/hair-styling-course.jpg",
-      modules: 24,
-      students: 156,
-      rating: 4.9,
-      level: "Beginner to Advanced",
-      whatYouLearn: [
-        "Fundamental cutting techniques",
-        "Advanced styling methods",
-        "Product knowledge and application",
-        "Client consultation skills",
-        "Salon safety and hygiene",
-      ],
-      requirements: [
-        "No prior experience required",
-        "Basic English proficiency",
-        "Commitment to attend all sessions",
-      ],
-    },
-    {
-      id: 2,
-      title: "Advanced Color Theory & Application",
-      description:
-        "Master the art of hair coloring with professional techniques",
-      category: "PROFESSIONAL",
-      isPublic: true,
-      duration: "10 weeks",
-      price: 2200,
-      thumbnail: "/images/courses/color-theory.jpg",
-      modules: 20,
-      students: 142,
-      rating: 4.8,
-      level: "Intermediate",
-      whatYouLearn: [
-        "Color wheel and theory",
-        "Balayage and highlighting techniques",
-        "Color correction methods",
-        "Chemical processes and safety",
-        "Trend forecasting",
-      ],
-      requirements: [
-        "Basic hair styling knowledge",
-        "Previous salon experience preferred",
-        "Color vision test required",
-      ],
-    },
-    {
-      id: 3,
-      title: "Professional Makeup Artistry",
-      description: "Complete makeup training for aspiring makeup artists",
-      category: "PROFESSIONAL",
-      isPublic: true,
-      duration: "8 weeks",
-      price: 1800,
-      thumbnail: "/images/courses/makeup-artistry.jpg",
-      modules: 16,
-      students: 203,
-      rating: 4.9,
-      level: "Beginner to Advanced",
-      whatYouLearn: [
-        "Facial anatomy and structure",
-        "Color matching and application",
-        "Bridal and special event makeup",
-        "Photography makeup techniques",
-        "Business and client management",
-      ],
-      requirements: [
-        "No prior experience required",
-        "Own basic makeup kit",
-        "Portfolio development included",
-      ],
-    },
-    {
-      id: 4,
-      title: "Nail Technology & Art",
-      description: "Professional nail care and artistic design techniques",
-      category: "ACADEMY",
-      isPublic: true,
-      duration: "6 weeks",
-      price: 1200,
-      thumbnail: "/images/courses/nail-technology.jpg",
-      modules: 12,
-      students: 98,
-      rating: 4.7,
-      level: "Beginner",
-      whatYouLearn: [
-        "Nail anatomy and health",
-        "Manicure and pedicure techniques",
-        "Gel and acrylic application",
-        "Nail art and design",
-        "Sanitation and safety protocols",
-      ],
-      requirements: [
-        "No experience necessary",
-        "Must provide own tools",
-        "State licensing preparation included",
-      ],
-    },
-    {
-      id: 5,
-      title: "Salon Business Management",
-      description: "Learn to run a successful beauty salon business",
-      category: "MASTERCLASS",
-      isPublic: true,
-      duration: "4 weeks",
-      price: 999,
-      thumbnail: "/images/courses/business-management.jpg",
-      modules: 8,
-      students: 67,
-      rating: 4.6,
-      level: "Advanced",
-      whatYouLearn: [
-        "Business planning and strategy",
-        "Financial management",
-        "Staff recruitment and training",
-        "Marketing and social media",
-        "Customer service excellence",
-      ],
-      requirements: [
-        "Salon experience required",
-        "Basic business knowledge helpful",
-        "Access to computer for assignments",
-      ],
-    },
-    {
-      id: 6,
-      title: "Skincare & Facial Treatments",
-      description: "Professional skincare analysis and treatment techniques",
-      category: "ACADEMY",
-      isPublic: true,
-      duration: "7 weeks",
-      price: 1500,
-      thumbnail: "/images/courses/skincare.jpg",
-      modules: 14,
-      students: 124,
-      rating: 4.8,
-      level: "Beginner to Intermediate",
-      whatYouLearn: [
-        "Skin analysis and consultation",
-        "Facial massage techniques",
-        "Product knowledge and selection",
-        "Treatment protocols",
-        "Client aftercare guidance",
-      ],
-      requirements: [
-        "Interest in skincare field",
-        "No prior experience needed",
-        "Certification preparation included",
-      ],
-    },
-  ];
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const data = await coursesService.getAllCourses();
+        setCourses(data);
+      } catch (error) {
+        setError("Failed to load courses. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const categories = [
-    { value: "ALL", label: "All Courses" },
-    { value: "PROFESSIONAL", label: "Professional Certification" },
-    { value: "ACADEMY", label: "Academy Training" },
-    { value: "MASTERCLASS", label: "Masterclass" },
-  ];
+    fetchCourses();
+  }, []);
 
-  const filteredCourses = courses.filter(
-    (course) =>
-      selectedCategory === "ALL" || course.category === selectedCategory
-  );
+  const courseCategoriesFromData = Array.from(
+    new Set(courses.map((c) => c.level.toLowerCase()))
+  ).map((lvl) => ({ id: lvl, name: lvl[0].toUpperCase() + lvl.slice(1) }));
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const openModal = (course: any) => {
-    setSelectedCourse(course);
+  const handleEnrollment = async (courseId: string) => {
+    if (!isAuthenticated) {
+      window.location.href = "/login?redirect=/courses";
+      return;
+    }
+
+    try {
+      await coursesService.enrollInCourse({
+        courseId,
+        userId: user!.id,
+      });
+      window.location.href = `/student/my-course/${courseId}`;
+    } catch (error) {
+      setError("Failed to enroll in the course. Please try again.");
+    }
   };
 
-  const closeModal = () => {
-    setSelectedCourse(null);
-  };
+  const filteredCourses = courses.filter((course) => {
+    const matchesCategory =
+      selectedCategories.length === 0 ||
+      selectedCategories.includes("ALL") ||
+      selectedCategories.includes(course.level.toLowerCase());
+
+    const matchesSearch =
+      course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      course.description.toLowerCase().includes(searchTerm.toLowerCase());
+
+    return matchesCategory && matchesSearch;
+  });
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className={styles.loadingContainer}>
+          <div className={styles.loader}>Loading...</div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (error) {
+    return (
+      <Layout>
+        <div className={styles.errorContainer}>
+          <p className={styles.error}>{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className={styles.retryButton}
+          >
+            Try Again
+          </button>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
-      <section className={styles.coursesPage}>
-        <div className="container">
-          {/* Hero Section */}
+      <div className={styles.coursesPage}>
+        <div className={styles.container}>
           <div className={styles.hero}>
             <h1 className={styles.pageTitle}>Professional Beauty Courses</h1>
             <p className={styles.pageSubtitle}>
@@ -201,30 +103,86 @@ export default function CoursesPage() {
             </p>
           </div>
 
-          {/* Category Filters */}
           <div className={styles.filters}>
-            {categories.map((category) => (
-              <button
-                key={category.value}
-                onClick={() => setSelectedCategory(category.value)}
-                className={`${styles.categoryButton} ${
-                  selectedCategory === category.value ? styles.active : ""
-                }`}
-              >
-                {category.label}
-              </button>
-            ))}
+            <div className={styles.searchContainer}>
+              <input
+                type="text"
+                placeholder="Search courses..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className={styles.searchInput}
+              />
+            </div>
+            <div className={styles.categoryFilters}>
+              <div className={`${styles.filterDropdown} ${dropdownOpen ? styles.open : ""}`}>
+                <button
+                  className={`btn ${styles.filterButton}`}
+                  onClick={() => setDropdownOpen((s) => !s)}
+                  aria-haspopup="menu"
+                  aria-expanded={dropdownOpen}
+                >
+                  {selectedCategories.length === 0
+                    ? "Filter levels"
+                    : `${selectedCategories.length} selected`}
+                </button>
+
+                {dropdownOpen && (
+                  <div className={styles.dropdownMenu} role="menu">
+                    <div className={styles.dropdownHeader}>
+                      <button
+                        className="btn btn-secondary"
+                        onClick={() => setSelectedCategories(["ALL"])}
+                      >
+                        All
+                      </button>
+                      <button
+                        className="btn btn-secondary"
+                        onClick={() => setSelectedCategories([])}
+                      >
+                        Clear
+                      </button>
+                    </div>
+
+                    <ul className={styles.dropdownList}>
+                      {courseCategoriesFromData.map((c) => (
+                        <li key={c.id}>
+                          <label>
+                            <input
+                              type="checkbox"
+                              checked={
+                                selectedCategories.includes("ALL") ||
+                                selectedCategories.includes(c.id)
+                              }
+                              onChange={(e) => {
+                                const checked = e.target.checked;
+                                setSelectedCategories((prev) => {
+                                  if (checked) {
+                                    return Array.from(new Set([...prev, c.id]));
+                                  }
+                                  return prev.filter(
+                                    (x) => x !== c.id && x !== "ALL"
+                                  );
+                                });
+                              }}
+                            />{" "}
+                            {c.name}
+                          </label>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
 
-          {/* Courses Grid */}
           <div className={styles.coursesGrid}>
             {filteredCourses.map((course) => (
-              <div key={course.id} className={`card ${styles.courseCard}`}>
+              <div key={course.id} className={styles.courseCard}>
                 <div className={styles.courseImage}>
-                  <img src={course.thumbnail} alt={course.title} />
-                  <div className={styles.courseBadge}>{course.category}</div>
+                  <img src={course.image} alt={course.title} />
+                  <div className={styles.courseBadge}>{course.level}</div>
                 </div>
-
                 <div className={styles.courseContent}>
                   <h3 className={styles.courseTitle}>{course.title}</h3>
                   <p className={styles.courseDescription}>
@@ -232,46 +190,28 @@ export default function CoursesPage() {
                   </p>
 
                   <div className={styles.courseStats}>
-                    <span className={styles.duration}>
-                      📅 {course.duration}
-                    </span>
-                    <span className={styles.modules}>
-                      📚 {course.modules} modules
-                    </span>
-                    <span className={styles.students}>
-                      👥 {course.students} students
-                    </span>
-                  </div>
-
-                  <div className={styles.courseRating}>
-                    <div className={styles.stars}>
-                      {[...Array(5)].map((_, i) => (
-                        <span
-                          key={i}
-                          className={
-                            i < Math.floor(course.rating)
-                              ? styles.starFilled
-                              : styles.star
-                          }
-                        >
-                          ⭐
-                        </span>
-                      ))}
-                    </div>
-                    <span className={styles.ratingText}>({course.rating})</span>
+                    <span>📅 {course.duration}</span>
+                    <span>📚 {course.topics.length} modules</span>
+                    <span>👨‍🏫 {course.instructor}</span>
                   </div>
 
                   <div className={styles.courseFooter}>
                     <div className={styles.price}>${course.price}</div>
                     <div className={styles.courseActions}>
                       <button
-                        onClick={() => openModal(course)}
                         className="btn btn-secondary btn-sm"
+                        onClick={() => setSelectedCourse(course)}
                       >
                         Learn More
                       </button>
-                      <button className="btn btn-primary btn-sm">
-                        Enroll Now
+                      <button
+                        className="btn btn-primary btn-sm"
+                        onClick={() => handleEnrollment(course.id)}
+                        disabled={course.enrollmentStatus !== "open"}
+                      >
+                        {course.enrollmentStatus === "open"
+                          ? "Enroll Now"
+                          : "Enrollment Closed"}
                       </button>
                     </div>
                   </div>
@@ -281,22 +221,21 @@ export default function CoursesPage() {
           </div>
         </div>
 
-        {/* Course Modal */}
         {selectedCourse && (
-          <div className={styles.modal} onClick={closeModal}>
+          <div className={styles.modal} onClick={() => setSelectedCourse(null)}>
             <div
               className={styles.modalContent}
               onClick={(e) => e.stopPropagation()}
             >
-              <button className={styles.closeButton} onClick={closeModal}>
+              <button
+                className={styles.closeButton}
+                onClick={() => setSelectedCourse(null)}
+              >
                 ×
               </button>
 
               <div className={styles.modalHeader}>
-                <img
-                  src={selectedCourse.thumbnail}
-                  alt={selectedCourse.title}
-                />
+                <img src={selectedCourse.image} alt={selectedCourse.title} />
                 <div className={styles.modalTitle}>
                   <h2>{selectedCourse.title}</h2>
                   <p>{selectedCourse.description}</p>
@@ -307,22 +246,9 @@ export default function CoursesPage() {
                 <div className={styles.modalSection}>
                   <h3>What You'll Learn</h3>
                   <ul>
-                    {selectedCourse.whatYouLearn.map(
-                      (item: any, index: any) => (
-                        <li key={index}>{item}</li>
-                      )
-                    )}
-                  </ul>
-                </div>
-
-                <div className={styles.modalSection}>
-                  <h3>Requirements</h3>
-                  <ul>
-                    {selectedCourse.requirements.map(
-                      (item: any, index: any) => (
-                        <li key={index}>{item}</li>
-                      )
-                    )}
+                    {selectedCourse.topics.map((topic, index) => (
+                      <li key={index}>{topic}</li>
+                    ))}
                   </ul>
                 </div>
 
@@ -334,23 +260,27 @@ export default function CoursesPage() {
                     <strong>Level:</strong> {selectedCourse.level}
                   </div>
                   <div className={styles.detailItem}>
-                    <strong>Modules:</strong> {selectedCourse.modules}
+                    <strong>Instructor:</strong> {selectedCourse.instructor}
                   </div>
                   <div className={styles.detailItem}>
-                    <strong>Price:</strong> ${selectedCourse.price}
+                    <strong>Status:</strong> {selectedCourse.enrollmentStatus}
                   </div>
                 </div>
               </div>
 
               <div className={styles.modalFooter}>
-                <button className="btn btn-primary btn-lg">
+                <button
+                  className="btn btn-primary btn-lg"
+                  onClick={() => handleEnrollment(selectedCourse.id)}
+                  disabled={selectedCourse.enrollmentStatus !== "open"}
+                >
                   Enroll Now - ${selectedCourse.price}
                 </button>
               </div>
             </div>
           </div>
         )}
-      </section>
+      </div>
     </Layout>
   );
 }

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./AdminLogin.module.css";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function AdminLoginPage() {
   const [credentials, setCredentials] = useState({
@@ -12,6 +13,7 @@ export default function AdminLoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+  const { login } = useAuth();
 
   const handleChange = (e: any) => {
     setCredentials({
@@ -24,27 +26,15 @@ export default function AdminLoginPage() {
     e.preventDefault();
     setIsLoading(true);
     setError("");
-
     try {
-      const response = await fetch("/api/auth/admin-login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(credentials),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // Store admin session (simplified - in production use proper session management)
-        localStorage.setItem("admin_session", data.token);
-        router.push("/admin/dashboard");
-      } else {
-        setError(data.error || "Login failed");
+      const user = await login(credentials.email, credentials.password);
+      if (user.role !== 'admin') {
+        setError("Access denied. Admin privileges required.");
+        return;
       }
-    } catch (error) {
-      setError("Network error. Please try again.");
+      // Navigation is handled in useAuth hook
+    } catch (err: any) {
+      setError(err?.message || "Login failed");
     } finally {
       setIsLoading(false);
     }

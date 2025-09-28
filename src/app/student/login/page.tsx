@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./StudentLogin.module.css";
+import { authService } from "@/services/auth.service";
 
 export default function StudentLoginPage() {
   const [credentials, setCredentials] = useState({
@@ -24,26 +25,13 @@ export default function StudentLoginPage() {
     e.preventDefault();
     setIsLoading(true);
     setError("");
-
     try {
-      const response = await fetch("/api/auth/student-login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(credentials),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem("student_session", data.token);
-        router.push("/student/dashboard");
-      } else {
-        setError(data.error || "Login failed");
-      }
-    } catch (error) {
-      setError("Network error. Please try again.");
+      const res = await authService.login(credentials);
+      localStorage.setItem("authToken", res.token);
+      localStorage.setItem("userRole", res.user.role);
+      router.push("/student/dashboard");
+    } catch (err: any) {
+      setError(err?.message || "Login failed");
     } finally {
       setIsLoading(false);
     }
