@@ -27,8 +27,12 @@ export default function StudentLoginPage() {
     setError("");
     try {
       const res = await authService.login(credentials);
+      
+      // Store auth data in both cookies and localStorage for compatibility
       localStorage.setItem("authToken", res.token);
       localStorage.setItem("userRole", res.user.role);
+      localStorage.setItem("student_session", res.token);
+      
       router.push("/student/dashboard");
     } catch (err: any) {
       setError(err?.message || "Login failed");

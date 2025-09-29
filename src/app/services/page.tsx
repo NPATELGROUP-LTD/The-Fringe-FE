@@ -34,6 +34,24 @@ export default function ServicesPage() {
   const { user, isAuthenticated } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const dropdown = document.querySelector('.filter-dropdown');
+      if (dropdown && !dropdown.contains(event.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    if (dropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dropdownOpen]);
+
   useEffect(() => {
     const fetchServices = async () => {
       try {
@@ -55,25 +73,9 @@ export default function ServicesPage() {
     fetchServices();
   }, []);
 
-  const handleBooking = async (serviceId: string) => {
-    if (!isAuthenticated) {
-      window.location.href = "/login?redirect=/services";
-      return;
-    }
-
-    try {
-      await servicesService.bookService({
-        serviceId,
-        userId: user!.id,
-        date: new Date().toISOString().split("T")[0],
-        time: "10:00",
-      });
-      window.location.href = "/student/dashboard";
-      setError("");
-      alert("Booking successful! Check your dashboard for details.");
-    } catch (error) {
-      setError("Failed to book the service. Please try again.");
-    }
+  const handleBooking = (serviceId: string) => {
+    // Redirect to the static book-now page
+    window.location.href = "/book-now";
   };
 
   const filteredServices = services.filter((service) => {
@@ -132,7 +134,7 @@ export default function ServicesPage() {
               <div
                 className={`${styles.filterDropdown} ${
                   dropdownOpen ? styles.open : ""
-                }`}
+                } filter-dropdown`}
               >
                 <button
                   className={`btn ${styles.filterButton}`}

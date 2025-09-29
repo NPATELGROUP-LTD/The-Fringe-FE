@@ -1,25 +1,46 @@
 .scrollContainer {
     width: 100%;
     overflow: hidden;
-    background: rgb(255, 255, 255);
+    position: relative;
+    background: #ffffff;
+    padding: 15px 0;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease-out;
+}
+
+.scrollContainer.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .scrollTrack {
     display: flex;
     width: max-content;
-    /* track grows based on content */
-    animation: scroll 20s linear infinite;
+    animation: scroll 40s linear infinite;
+    will-change: transform;
 }
 
 .word {
     flex-shrink: 0;
-    /* prevent squishing */
-    margin: 2rem 3rem;
-    /* space between words */
-    font-size: 2rem;
-    font-weight: bold;
-    color: rgb(0, 0, 0);
+    margin: 0 30px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000;
+    background-clip: text;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    transition: all 0.3s ease;
+    cursor: default;
+    user-select: none;
 }
+
+.word:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 20px rgba(208, 180, 159, 0.4));
+}
+
 
 @keyframes scroll {
     0% {
@@ -27,7 +48,149 @@
     }
 
     100% {
-        transform: translateX(-33.333%);
-        /* move by one full set of words */
+        transform: translateX(-25%);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+
+/* Large Desktop (1200px+) */
+@media (min-width: 1200px) {
+    .word {
+        font-size: 2rem;
+        margin: 0 40px;
+    }
+}
+
+/* Medium Desktop (992px - 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .word {
+        font-size: 1.4rem;
+        margin: 0 35px;
+    }
+
+    .gradientLeft,
+    .gradientRight {
+        width: 150px;
+    }
+}
+
+/* Tablet (768px - 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .scrollContainer {
+        padding: 15px 0;
+    }
+
+    .word {
+        font-size: 1.3rem;
+        margin: 0 30px;
+        letter-spacing: 1px;
+    }
+
+    .gradientLeft,
+    .gradientRight {
+        width: 120px;
+    }
+}
+
+/* Mobile Landscape (481px - 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+    .scrollContainer {
+        padding: 12px 0;
+    }
+
+    .word {
+        font-size: 1.2rem;
+        margin: 0 25px;
+        letter-spacing: 1px;
+    }
+
+    .gradientLeft,
+    .gradientRight {
+        width: 80px;
+    }
+}
+
+/* Mobile Portrait (320px - 480px) */
+@media (min-width: 320px) and (max-width: 480px) {
+    .scrollContainer {
+        padding: 10px 0;
+    }
+
+    .word {
+        font-size: 1.1rem;
+        margin: 0 20px;
+        letter-spacing: 0.5px;
+    }
+
+    .gradientLeft,
+    .gradientRight {
+        width: 60px;
+    }
+}
+
+/* Extra Small Mobile (≤320px) */
+@media (max-width: 320px) {
+    .scrollContainer {
+        padding: 8px 0;
+    }
+
+    .word {
+        font-size: 1rem;
+        margin: 0 15px;
+        letter-spacing: 0px;
+    }
+
+    .gradientLeft,
+    .gradientRight {
+        width: 50px;
+    }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .scrollTrack {
+        animation-duration: 60s;
+    }
+
+    .word {
+        transition: none;
+    }
+
+    .word:hover {
+        transform: none;
+        filter: none;
+    }
+
+    .sectionHeader {
+        animation: none;
+        opacity: 1;
+    }
+
+    .scrollContainer {
+        transition: none;
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .word {
+        background: #000000;
+        -webkit-background-clip: text;
+        background-clip: text;
     }
 }

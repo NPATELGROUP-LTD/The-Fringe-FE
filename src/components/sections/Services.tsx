@@ -16,6 +16,7 @@ export default function Services() {
   const sectionsRef = useRef<HTMLDivElement[]>([]);
   const navRef = useRef<HTMLDivElement>(null);
   const [isNavCompact, setIsNavCompact] = useState(false);
+  const [activeSlides, setActiveSlides] = useState<{[key: string]: number}>({});
 
   const serviceCategories = [
     {
@@ -172,6 +173,61 @@ export default function Services() {
     };
   }, []);
 
+  // Carousel functionality useEffect
+  useEffect(() => {
+    // Initialize active slides
+    const initialActiveSlides: {[key: string]: number} = {};
+    serviceCategories.forEach(category => {
+      initialActiveSlides[category.id] = 0;
+    });
+    setActiveSlides(initialActiveSlides);
+
+    // Add scroll listeners for each carousel
+    const handleCarouselScroll = (categoryId: string) => {
+      const container = document.getElementById(`services-${categoryId}`);
+      if (!container) return;
+
+      const scrollLeft = container.scrollLeft;
+      const cardWidth = container.children[0]?.getBoundingClientRect().width || 0;
+      
+      // Dynamic gap based on screen width
+      let gap = 30; // Default for >1024px
+      if (window.innerWidth <= 320) gap = 15;
+      else if (window.innerWidth <= 480) gap = 20;
+      else if (window.innerWidth <= 768) gap = 25;
+      else if (window.innerWidth <= 1024) gap = 30;
+      
+      const activeIndex = Math.round(scrollLeft / (cardWidth + gap));
+      
+      setActiveSlides(prev => ({
+        ...prev,
+        [categoryId]: Math.max(0, Math.min(activeIndex, container.children.length - 1))
+      }));
+    };
+
+    const scrollListeners: Array<() => void> = [];
+
+    // Set up scroll listeners with a delay to ensure DOM is ready
+    const setupListeners = () => {
+      serviceCategories.forEach(category => {
+        const container = document.getElementById(`services-${category.id}`);
+        if (container) {
+          const listener = () => handleCarouselScroll(category.id);
+          container.addEventListener('scroll', listener, { passive: true });
+          scrollListeners.push(() => container.removeEventListener('scroll', listener));
+        }
+      });
+    };
+
+    // Setup listeners after a short delay to ensure DOM is ready
+    const timeoutId = setTimeout(setupListeners, 100);
+
+    return () => {
+      clearTimeout(timeoutId);
+      scrollListeners.forEach(cleanup => cleanup());
+    };
+  }, []);
+
   const addToRefs = (el: HTMLDivElement | null) => {
     if (el && !sectionsRef.current.includes(el)) {
       sectionsRef.current.push(el);
@@ -227,30 +283,64 @@ export default function Services() {
               </p>
             </div>
 
-            <div className={styles.servicesGrid}>
-              {category.services.map((service) => (
-                <div key={service.id} className={styles.serviceCard}>
-                  <div className={styles.serviceImageContainer}>
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      className={styles.serviceImage}
-                    />
-                    <div className={styles.serviceOverlay}>
-                      <span className={styles.servicePrice}>
-                        {service.price}
-                      </span>
+            <div className={styles.servicesContainer}>
+              <div className={styles.servicesGrid} id={`services-${category.id}`}>
+                {category.services.map((service, serviceIndex) => (
+                  <div key={service.id} className={styles.serviceCard}>
+                    <div className={styles.serviceImageContainer}>
+                      <img
+                        src={service.image}
+                        alt={service.title}
+                        className={styles.serviceImage}
+                      />
+                      <div className={styles.serviceOverlay}>
+                        <span className={styles.servicePrice}>
+                          {service.price}
+                        </span>
+                      </div>
+                    </div>
+                    <div className={styles.serviceContent}>
+                      <h4 className={styles.serviceTitle}>{service.title}</h4>
+                      <p className={styles.serviceDescription}>
+                        {service.description}
+                      </p>
+                      <button className={styles.serviceButton}>Book Now</button>
                     </div>
                   </div>
-                  <div className={styles.serviceContent}>
-                    <h4 className={styles.serviceTitle}>{service.title}</h4>
-                    <p className={styles.serviceDescription}>
-                      {service.description}
-                    </p>
-                    <button className={styles.serviceButton}>Book Now</button>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              
+              {/* Slider Navigation Dots - Only show on mobile */}
+              <div className={styles.sliderNavigation}>
+                {category.services.map((_, dotIndex) => (
+                  <button
+                    key={dotIndex}
+                    className={`${styles.sliderDot} ${
+                      activeSlides[category.id] === dotIndex ? styles.active : ''
+                    }`}
+                    onClick={() => {
+                      const container = document.getElementById(`services-${category.id}`);
+                      const cardWidth = container?.children[0]?.getBoundingClientRect().width || 0;
+                      
+                      // Dynamic gap based on screen width
+                      let gap = 30; // Default for >1024px
+                      if (window.innerWidth <= 320) gap = 15;
+                      else if (window.innerWidth <= 480) gap = 20;
+                      else if (window.innerWidth <= 768) gap = 25;
+                      else if (window.innerWidth <= 1024) gap = 30;
+                      
+                      container?.scrollTo({
+                        left: dotIndex * (cardWidth + gap),
+                        behavior: 'smooth'
+                      });
+                      setActiveSlides(prev => ({
+                        ...prev,
+                        [category.id]: dotIndex
+                      }));
+                    }}
+                  />
+                ))}
+              </div>
             </div>
 
             {/* Scroll indicator for next section */}
