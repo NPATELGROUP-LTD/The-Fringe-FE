@@ -21,6 +21,32 @@ body {
     background: linear-gradient(to bottom,
             transparent,
             rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+    margin: 0;
+    padding: 0;
+}
+
+/* Ensure no gaps between sections */
+section {
+    margin: 0 !important;
+    padding: 0;
+    display: block;
+}
+
+/* Remove default margins from main elements */
+main {
+    margin: 0;
+    padding: 0;
+}
+
+/* Specific fix for Hero and Services sections */
+section[id="services"] {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* Remove any default spacing from divs */
+div {
+    margin: 0;
 }
 
 .button {

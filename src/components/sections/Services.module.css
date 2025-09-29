@@ -5,9 +5,10 @@
 .servicesWrapper {
     position: relative;
     background: var(--color-primary-bg);
-    margin-top: 0;
-    padding-top: 0;
+    margin: 0 !important;
+    padding: 0 !important;
     font-family: var(--font-body);
+    display: block;
 }
 
 /* ==============================================
@@ -23,7 +24,14 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding: 15px 0;
     transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
-    margin-top: 0;
+    margin: 0 !important;
+}
+
+/* Hide service navigation on screens smaller than 1250px */
+@media (max-width: 1249px) {
+    .serviceNavigation {
+        display: none;
+    }
 }
 
 .serviceNavigation.compact {
@@ -105,12 +113,12 @@
    CATEGORY SECTIONS - FULL SCREEN
    ============================================== */
 .categorySection {
-    min-height: 100vh;
+    min-height: auto;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     position: relative;
-    padding: 100px 0;
+    padding: 120px 0 80px 0;
     background: var(--color-primary-bg);
 }
 
@@ -127,7 +135,7 @@
 
 .categoryHeader {
     text-align: center;
-    margin-bottom: 80px;
+    margin-bottom: 60px;
 }
 
 .categoryTitle {
@@ -174,30 +182,150 @@
 /* ==============================================
    SERVICES GRID
    ============================================== */
+.servicesContainer {
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.sliderNavigation {
+    display: none;
+}
+
 .servicesGrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 40px;
-    margin-bottom: 60px;
+    gap: 30px;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Carousel styles for mobile devices */
+@media (max-width: 1024px) {
+    .servicesContainer {
+        position: relative;
+        padding-bottom: 40px;
+    }
+
+    .servicesGrid {
+        display: flex;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        gap: 30px;
+        padding: 0 calc(50vw - 175px);
+        margin: 0;
+        scrollbar-width: none;
+        /* Firefox */
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        /* iOS smooth scrolling */
+        touch-action: pan-x;
+        /* Enable horizontal touch scrolling */
+    }
+
+    .servicesGrid::-webkit-scrollbar {
+        display: none;
+        /* Chrome, Safari, Opera */
+    }
+
+    .serviceCard {
+        flex: 0 0 350px;
+        min-width: 350px;
+        scroll-snap-align: center;
+    }
+
+    .sliderNavigation {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 20px;
+    }
+
+    .sliderDot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        background-color: transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 0;
+    }
+
+    .sliderDot:hover {
+        border-color: rgba(255, 255, 255, 0.6);
+        transform: scale(1.1);
+    }
+
+    .sliderDot.active {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-color: rgba(255, 255, 255, 0.9);
+        transform: scale(1.2);
+    }
+}
+
+@media (max-width: 768px) {
+    .servicesGrid {
+        padding: 0 calc(50vw - 160px);
+        gap: 25px;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-x;
+    }
+
+    .serviceCard {
+        flex: 0 0 320px;
+        min-width: 320px;
+    }
+}
+
+@media (max-width: 480px) {
+    .servicesGrid {
+        padding: 0 calc(50vw - 145px);
+        gap: 20px;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-x;
+    }
+
+    .serviceCard {
+        flex: 0 0 290px;
+        min-width: 290px;
+    }
+}
+
+@media (max-width: 320px) {
+    .servicesGrid {
+        padding: 0 calc(50vw - 135px);
+        gap: 15px;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-x;
+    }
+
+    .serviceCard {
+        flex: 0 0 270px;
+        min-width: 270px;
+    }
 }
 
 .serviceCard {
-    background: rgba(0, 0, 0, 0.8);
-    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 24px;
     overflow: hidden;
     transition: all 0.4s ease;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .serviceCard:hover {
-    transform: translateY(-10px) scale(1.02);
-    border-color: rgba(255, 255, 255, 0.2);
-    border-radius: 25px;
+    transform: translateY(-8px) scale(1.02);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
 }
 
 .serviceImageContainer {
     position: relative;
-    height: 250px;
+    height: 280px;
     overflow: hidden;
 }
 
@@ -347,13 +475,13 @@
    CTA SECTION
    ============================================== */
 .ctaSection {
-    min-height: 100vh;
+    min-height: 50vh;
     display: flex;
     align-items: center;
     justify-content: center;
     background: var(--color-primary-bg);
     position: relative;
-    margin-bottom: 150px;
+    padding: 120px 0;
 }
 
 .ctaContainer {
@@ -415,8 +543,16 @@
     }
 
     .servicesGrid {
+        display: grid;
         grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
         gap: 50px;
+        overflow: visible;
+        padding: 0;
+    }
+
+    .serviceCard {
+        flex: none;
+        min-width: auto;
     }
 
     .serviceNavigation {
@@ -449,8 +585,16 @@
     }
 
     .servicesGrid {
+        display: grid;
         grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
         gap: 40px;
+        overflow: visible;
+        padding: 0;
+    }
+
+    .serviceCard {
+        flex: none;
+        min-width: auto;
     }
 
     .serviceNavigation {
@@ -472,8 +616,8 @@
     }
 }
 
-/* Medium Desktop (992px-1199px) */
-@media (max-width: 1199px) and (min-width: 992px) {
+/* Medium Desktop (1025px-1199px) - Use Grid */
+@media (max-width: 1199px) and (min-width: 1025px) {
     .categoryTitle {
         font-size: 3.4rem;
     }
@@ -483,8 +627,16 @@
     }
 
     .servicesGrid {
+        display: grid !important;
         grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
         gap: 35px;
+        overflow: visible !important;
+        padding: 0 !important;
+    }
+
+    .serviceCard {
+        flex: none !important;
+        min-width: auto !important;
     }
 
     .serviceNavigation {
@@ -551,52 +703,59 @@
 
 /* Mobile Landscape (481px-768px) */
 @media (max-width: 768px) and (min-width: 481px) {
-    .serviceNavigation {
-        top: 65px;
-        padding: 12px 0;
-    }
-
-    .serviceNavigation.compact {
-        top: 65px;
-        padding: 6px 0;
-    }
-
-    .categoryButtons {
-        gap: 8px;
-        justify-content: center;
-    }
-
-    .categoryNavButton {
-        padding: 8px 16px;
-        font-size: 0.8rem;
-        border-radius: 18px;
-    }
-
-    .serviceNavigation.compact .categoryNavButton {
-        padding: 6px 12px;
-        font-size: 0.75rem;
-        border-radius: 15px;
+    .categorySection {
+        min-height: 100vh;
+        padding: 40px 0;
+        align-items: center;
     }
 
     .categoryContainer {
         padding: 0 20px;
     }
 
+    .categoryHeader {
+        margin-bottom: 40px;
+    }
+
     .categoryTitle {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+        margin-bottom: 15px;
     }
 
     .categorySubtitle {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .categoryDescription {
+        font-size: 1rem;
+        margin-bottom: 30px;
     }
 
     .servicesGrid {
         grid-template-columns: 1fr;
         gap: 25px;
+        margin-bottom: 30px;
+    }
+
+    .serviceCard {
+        max-width: 100%;
+    }
+
+    .serviceImageContainer {
+        height: 220px;
+    }
+
+    .serviceContent {
+        padding: 25px;
     }
 
     .ctaTitle {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+    }
+
+    .ctaDescription {
+        font-size: 1.1rem;
     }
 
     .ctaButton {
@@ -607,69 +766,79 @@
 
 /* Mobile Portrait (320px-480px) */
 @media (max-width: 480px) and (min-width: 320px) {
-    .serviceNavigation {
-        top: 60px;
-        padding: 10px 0;
-    }
-
-    .serviceNavigation.compact {
-        top: 60px;
-        padding: 5px 0;
-    }
-
-    .navContainer {
-        padding: 0 15px;
-    }
-
-    .categoryButtons {
-        gap: 6px;
-        flex-wrap: wrap;
-    }
-
-    .categoryNavButton {
-        padding: 6px 12px;
-        font-size: 0.7rem;
-        border-radius: 15px;
-        letter-spacing: 0.3px;
-        min-width: auto;
-    }
-
-    .serviceNavigation.compact .categoryNavButton {
-        padding: 4px 10px;
-        font-size: 0.65rem;
-        border-radius: 12px;
-    }
-
     .categorySection {
-        padding: 80px 0;
+        min-height: 100vh;
+        padding: 30px 0;
+        align-items: center;
+        justify-content: center;
     }
 
     .categoryContainer {
         padding: 0 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .categoryHeader {
+        margin-bottom: 30px;
     }
 
     .categoryTitle {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        margin-bottom: 12px;
     }
 
     .categorySubtitle {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+    }
+
+    .categoryDescription {
+        font-size: 0.95rem;
+        margin-bottom: 25px;
     }
 
     .servicesGrid {
-        gap: 20px;
+        gap: 15px;
+        margin-bottom: 25px;
+        padding: 0 15px;
+    }
+
+    .serviceCard {
+        border-radius: 16px;
     }
 
     .serviceImageContainer {
-        height: 200px;
+        height: 180px;
     }
 
     .serviceContent {
         padding: 20px;
     }
 
+    .serviceTitle {
+        font-size: 1.3rem;
+        margin-bottom: 12px;
+    }
+
+    .serviceDescription {
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
+
+    .serviceButton {
+        padding: 10px 24px;
+        font-size: 0.85rem;
+    }
+
     .ctaTitle {
-        font-size: 2rem;
+        font-size: 1.8rem;
+    }
+
+    .ctaDescription {
+        font-size: 1rem;
     }
 
     .ctaContainer {
@@ -684,57 +853,78 @@
 
 /* Extra Small Mobile (≤320px) */
 @media (max-width: 320px) {
-    .serviceNavigation {
-        top: 60px;
-        padding: 8px 0;
-    }
-
-    .serviceNavigation.compact {
-        top: 60px;
-        padding: 4px 0;
-    }
-
-    .navContainer {
-        padding: 0 10px;
-    }
-
-    .categoryButtons {
-        gap: 4px;
-        flex-wrap: wrap;
-    }
-
-    .categoryNavButton {
-        padding: 5px 10px;
-        font-size: 0.65rem;
-        border-radius: 12px;
-        letter-spacing: 0.2px;
-        min-width: auto;
-    }
-
-    .serviceNavigation.compact .categoryNavButton {
-        padding: 3px 8px;
-        font-size: 0.6rem;
-        border-radius: 10px;
+    .categorySection {
+        min-height: 100vh;
+        padding: 25px 0;
+        align-items: center;
+        justify-content: center;
     }
 
     .categoryContainer {
         padding: 0 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .categoryHeader {
+        margin-bottom: 25px;
     }
 
     .categoryTitle {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+        margin-bottom: 10px;
     }
 
     .categorySubtitle {
-        font-size: 1.1rem;
+        font-size: 1rem;
+        margin-bottom: 8px;
+    }
+
+    .categoryDescription {
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
+
+    .servicesGrid {
+        gap: 18px;
+        margin-bottom: 20px;
+    }
+
+    .serviceCard {
+        border-radius: 14px;
+    }
+
+    .serviceImageContainer {
+        height: 160px;
     }
 
     .serviceContent {
         padding: 15px;
     }
 
+    .serviceTitle {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .serviceDescription {
+        font-size: 0.85rem;
+        margin-bottom: 18px;
+    }
+
+    .serviceButton {
+        padding: 8px 20px;
+        font-size: 0.8rem;
+    }
+
     .ctaTitle {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+    }
+
+    .ctaDescription {
+        font-size: 0.95rem;
     }
 
     .ctaContainer {

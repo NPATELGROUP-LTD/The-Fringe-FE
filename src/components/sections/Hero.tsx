@@ -15,18 +15,43 @@ export default function Hero() {
     const video = videoRef.current;
     if (video) {
       const handleLoadedData = () => {
+        console.log("Video loaded successfully");
         setVideoLoaded(true);
       };
 
+      const handleError = (e: Event) => {
+        console.error("Video failed to load:", e);
+        console.error("Video error details:", video.error);
+      };
+
+      const handleCanPlay = () => {
+        console.log("Video can start playing");
+        setVideoLoaded(true);
+      };
+
+      const handleLoadStart = () => {
+        console.log("Video loading started");
+      };
+
       video.addEventListener("loadeddata", handleLoadedData);
+      video.addEventListener("error", handleError);
+      video.addEventListener("canplay", handleCanPlay);
+      video.addEventListener("loadstart", handleLoadStart);
 
       // If video is already loaded
       if (video.readyState >= 2) {
+        console.log("Video already loaded, readyState:", video.readyState);
         setVideoLoaded(true);
       }
 
+      // Try to load the video
+      video.load();
+
       return () => {
         video.removeEventListener("loadeddata", handleLoadedData);
+        video.removeEventListener("error", handleError);
+        video.removeEventListener("canplay", handleCanPlay);
+        video.removeEventListener("loadstart", handleLoadStart);
       };
     }
   }, []);
@@ -51,9 +76,11 @@ export default function Hero() {
           playsInline
           className={`${styles.video} ${videoLoaded ? styles.videoLoaded : ""}`}
           poster="/video-poster.jpg"
-          preload="metadata"
+          preload="auto"
+          controls={false}
         >
           <source src="/intro.mp4" type="video/mp4" />
+          <source src="/intro.webm" type="video/webm" />
           Your browser does not support the video tag.
         </video>
         <div className={styles.videoOverlay}></div>

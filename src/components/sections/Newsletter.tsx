@@ -49,59 +49,65 @@ export default function Newsletter() {
   return (
     <section className={styles.newsletter}>
       <div className={styles.container}>
-        <h2 className={styles.title}>Stay in the Loop</h2>
-        <p className={styles.description}>
-          Get the latest beauty tips, course updates, special offers, and
-          exclusive content delivered straight to your inbox.
-        </p>
-        <ul className={styles.benefits}>
-          <li>💄 Weekly beauty tips and tutorials</li>
-          <li>📚 Early access to new courses</li>
-          <li>🎯 Exclusive member discounts</li>
-          <li>✨ Industry news and trends</li>
-        </ul>
-
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <div className={styles.inputGroup}>
-            <input
-              type="text"
-              placeholder="Your name (optional)"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className={styles.input}
-            />
-            <input
-              type="email"
-              placeholder="Enter your email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className={styles.input}
-            />
+        <div className={styles.content}>
+          <div className={styles.textContent}>
+            <h2 className={styles.title}>Stay in the Loop</h2>
+            <p className={styles.description}>
+              Get the latest beauty tips, course updates, special offers, and
+              exclusive content delivered straight to your inbox.
+            </p>
+            <ul className={styles.benefits}>
+              <li>💄 Weekly beauty tips and tutorials</li>
+              <li>📚 Early access to new courses</li>
+              <li>🎯 Exclusive member discounts</li>
+              <li>✨ Industry news and trends</li>
+            </ul>
           </div>
 
-          {message && (
-            <div
-              className={`${styles.message} ${
-                isSuccess ? styles.success : styles.error
-              }`}
-            >
-              {message}
-            </div>
-          )}
+          <div className={styles.formContainer}>
+            <form onSubmit={handleSubmit} className={styles.form}>
+              <div className={styles.inputGroup}>
+                <input
+                  type="text"
+                  placeholder="Your name (optional)"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className={styles.input}
+                />
+                <input
+                  type="email"
+                  placeholder="Enter your email address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className={styles.input}
+                />
+              </div>
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className={styles.submitButton}
-          >
-            {isSubmitting ? "Subscribing..." : "Subscribe Now"}
-          </button>
+              {message && (
+                <div
+                  className={`${styles.message} ${
+                    isSuccess ? styles.success : styles.error
+                  }`}
+                >
+                  {message}
+                </div>
+              )}
 
-          <p className={styles.privacy}>
-            We respect your privacy. Unsubscribe at any time.
-          </p>
-        </form>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={styles.submitButton}
+              >
+                {isSubmitting ? "Subscribing..." : "Subscribe Now"}
+              </button>
+
+              <p className={styles.privacy}>
+                We respect your privacy. Unsubscribe at any time.
+              </p>
+            </form>
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -24,15 +24,6 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   return (
     <div className={styles.adminLayout}>
-      {/* Fixed Hamburger Toggle - Always Visible */}
-      <button
-        onClick={toggleSidebar}
-        className={styles.toggleButton}
-        aria-label="Toggle sidebar"
-      >
-        ☰
-      </button>
-
       {/* Sidebar */}
       <aside
         className={`${styles.sidebar} ${
@@ -44,42 +35,53 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <span className={styles.logoText}>The Fringe</span>
             <span className={styles.logoSubtext}>Admin</span>
           </Link>
+          
+          {/* Hamburger Toggle - Right side of sidebar */}
+          <button
+            onClick={toggleSidebar}
+            className={styles.toggleButton}
+            aria-label="Toggle sidebar"
+          >
+            <span className={styles.hamburgerLine}></span>
+            <span className={styles.hamburgerLine}></span>
+            <span className={styles.hamburgerLine}></span>
+          </button>
         </div>
 
         <nav className={styles.nav}>
-          <Link href="/admin/dashboard" className={styles.navLink}>
+          <Link href="/admin/dashboard" className={styles.navLink} title="Dashboard">
             <span className={styles.navIcon}>📊</span>
             <span className={styles.navText}>Dashboard</span>
           </Link>
 
-          <Link href="/admin/courses" className={styles.navLink}>
+          <Link href="/admin/courses" className={styles.navLink} title="Courses">
             <span className={styles.navIcon}>📚</span>
             <span className={styles.navText}>Courses</span>
           </Link>
 
-          <Link href="/admin/services" className={styles.navLink}>
+          <Link href="/admin/services" className={styles.navLink} title="Services">
             <span className={styles.navIcon}>💼</span>
             <span className={styles.navText}>Services</span>
           </Link>
 
-          <Link href="/admin/students" className={styles.navLink}>
+          <Link href="/admin/students" className={styles.navLink} title="Students">
             <span className={styles.navIcon}>👥</span>
             <span className={styles.navText}>Students</span>
           </Link>
 
-          <Link href="/admin/newsletter" className={styles.navLink}>
+          <Link href="/admin/newsletter" className={styles.navLink} title="Newsletter">
             <span className={styles.navIcon}>📧</span>
             <span className={styles.navText}>Newsletter</span>
           </Link>
 
-          <Link href="/admin/certificates" className={styles.navLink}>
+          <Link href="/admin/certificates" className={styles.navLink} title="Certificates">
             <span className={styles.navIcon}>🏆</span>
             <span className={styles.navText}>Certificates</span>
           </Link>
         </nav>
 
         <div className={styles.sidebarFooter}>
-          <button onClick={handleLogout} className={styles.logoutButton}>
+          <button onClick={handleLogout} className={styles.logoutButton} title="Logout">
             <span className={styles.navIcon}>🚪</span>
             <span className={styles.navText}>Logout</span>
           </button>

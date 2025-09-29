@@ -36,6 +36,24 @@ export default function CoursesPage() {
   ).map((lvl) => ({ id: lvl, name: lvl[0].toUpperCase() + lvl.slice(1) }));
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const dropdown = document.querySelector('.course-filter-dropdown');
+      if (dropdown && !dropdown.contains(event.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    if (dropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dropdownOpen]);
+
   const handleEnrollment = async (courseId: string) => {
     if (!isAuthenticated) {
       window.location.href = "/login?redirect=/courses";
@@ -114,7 +132,7 @@ export default function CoursesPage() {
               />
             </div>
             <div className={styles.categoryFilters}>
-              <div className={`${styles.filterDropdown} ${dropdownOpen ? styles.open : ""}`}>
+              <div className={`${styles.filterDropdown} ${dropdownOpen ? styles.open : ""} course-filter-dropdown`}>
                 <button
                   className={`btn ${styles.filterButton}`}
                   onClick={() => setDropdownOpen((s) => !s)}
