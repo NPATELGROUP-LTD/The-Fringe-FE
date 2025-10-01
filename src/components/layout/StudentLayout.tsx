@@ -24,14 +24,24 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
 
   return (
     <div className={styles.studentLayout}>
-      {/* Fixed Hamburger Toggle - Always Visible */}
+      {/* Mobile Hamburger Button - Always visible on mobile */}
       <button
         onClick={toggleSidebar}
-        className={styles.toggleButton}
+        className={styles.mobileToggle}
         aria-label="Toggle sidebar"
       >
-        ☰
+        <span className={styles.hamburgerLine}></span>
+        <span className={styles.hamburgerLine}></span>
+        <span className={styles.hamburgerLine}></span>
       </button>
+
+      {/* Sidebar Overlay for mobile */}
+      {isSidebarOpen && (
+        <div 
+          className={styles.sidebarOverlay}
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
 
       {/* Sidebar */}
       <aside
@@ -44,6 +54,17 @@ export default function StudentLayout({ children }: StudentLayoutProps) {
             <span className={styles.logoText}>The Fringe</span>
             <span className={styles.logoSubtext}>Student Portal</span>
           </Link>
+          
+          {/* Hamburger Toggle - Right side of sidebar */}
+          <button
+            onClick={toggleSidebar}
+            className={styles.toggleButton}
+            aria-label="Toggle sidebar"
+          >
+            <span className={styles.hamburgerLine}></span>
+            <span className={styles.hamburgerLine}></span>
+            <span className={styles.hamburgerLine}></span>
+          </button>
         </div>
 
         <nav className={styles.nav}>

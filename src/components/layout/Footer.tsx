@@ -1,5 +1,6 @@
 "use client";
 
+import 'remixicon/fonts/remixicon.css'
 import Link from "next/link";
 import styles from "./Footer.module.css";
 
@@ -19,13 +20,13 @@ export default function Footer() {
             </p>
             <div className={styles.socialLinks}>
               <a href="#" className={styles.socialLink} aria-label="Facebook">
-                <span>Facebook</span>
+                <span><i className="ri-facebook-fill"></i></span>
               </a>
               <a href="#" className={styles.socialLink} aria-label="Instagram">
-                <span>Instagram</span>
+                <span><i className="ri-instagram-line"></i></span>
               </a>
-              <a href="#" className={styles.socialLink} aria-label="Twitter">
-                <span>Twitter</span>
+              <a href="#" className={styles.socialLink} aria-label="Whatsapp">
+                <span><i className="ri-whatsapp-line"></i></span>
               </a>
             </div>
           </div>
@@ -128,11 +129,14 @@ export default function Footer() {
               <Link href="/privacy-policy" className={styles.legalLink}>
                 Privacy Policy
               </Link>
-              <Link href="/cookies-policy" className={styles.legalLink}>
+              <Link href="/cookie-policy" className={styles.legalLink}>
                 Cookies Policy
               </Link>
-              <Link href="/admin-login" className={styles.legalLink}>
-                Admin
+              <Link href="/student/dashboard" className={styles.legalLink}>
+                Student
+              </Link>
+              <Link href="/admin/dashboard" className={styles.legalLink}>
+                Staff
               </Link>
             </nav>
           </div>

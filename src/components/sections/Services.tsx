@@ -1,13 +1,23 @@
- "use client";
+"use client";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useSmoothScroll } from "../../hooks/useSmoothScroll";
+import { servicesService, type Service } from "../../services/services.service";
+import { settingsService } from "../../services/settings.service";
 import styles from "./Services.module.css";
 
 // Register GSAP plugins
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
+}
+
+interface ServiceCategory {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  services: Service[];
 }
 
 export default function Services() {
@@ -16,99 +26,110 @@ export default function Services() {
   const sectionsRef = useRef<HTMLDivElement[]>([]);
   const navRef = useRef<HTMLDivElement>(null);
   const [isNavCompact, setIsNavCompact] = useState(false);
-  const [activeSlides, setActiveSlides] = useState<{[key: string]: number}>({});
+  const [activeSlides, setActiveSlides] = useState<{ [key: string]: number }>(
+    {}
+  );
+  const [serviceCategories, setServiceCategories] = useState<ServiceCategory[]>(
+    []
+  );
+  const [loading, setLoading] = useState(true);
+  const [showPrices, setShowPrices] = useState(true);
 
-  const serviceCategories = [
-    {
-      id: "hair-services",
+  // Category mapping for display information
+  const categoryDisplayInfo: {
+    [key: string]: { title: string; subtitle: string; description: string };
+  } = {
+    HAIR: {
       title: "Hair Services",
       subtitle: "Transform Your Hair",
       description: "Professional hair styling and treatments",
-      services: [
-        {
-          id: 1,
-          title: "Premium Hair Cut",
-          description:
-            "Precision cuts tailored to your face shape and lifestyle",
-          price: "From $45",
-          image: "/images/hair-cut.jpg",
-        },
-        {
-          id: 2,
-          title: "Hair Styling",
-          description: "Special event styling and everyday looks",
-          price: "From $35",
-          image: "/images/hair-styling.jpg",
-        },
-        {
-          id: 3,
-          title: "Hair Treatments",
-          description: "Deep conditioning and repair treatments",
-          price: "From $55",
-          image: "/images/hair-treatment.jpg",
-        },
-      ],
     },
-    {
-      id: "color-services",
-      title: "Color Services",
-      subtitle: "Express Your Style",
-      description: "Expert coloring techniques and color correction",
-      services: [
-        {
-          id: 4,
-          title: "Full Color",
-          description: "Complete color transformation with premium products",
-          price: "From $75",
-          image: "/images/full-color.jpg",
-        },
-        {
-          id: 5,
-          title: "Highlights & Balayage",
-          description:
-            "Natural-looking highlights and modern balayage techniques",
-          price: "From $95",
-          image: "/images/highlights.jpg",
-        },
-        {
-          id: 6,
-          title: "Color Correction",
-          description: "Fix and transform previous color work",
-          price: "From $120",
-          image: "/images/color-correction.jpg",
-        },
-      ],
+    SKIN: {
+      title: "Skin Care",
+      subtitle: "Rejuvenate Your Skin",
+      description: "Luxurious facial treatments and skin care",
     },
-    {
-      id: "beauty-services",
-      title: "Beauty Services",
+    MAKEUP: {
+      title: "Makeup Services",
       subtitle: "Complete Your Look",
-      description: "Professional makeup and beauty treatments",
-      services: [
-        {
-          id: 7,
-          title: "Bridal Makeup",
-          description: "Flawless makeup for your special day",
-          price: "From $85",
-          image: "/images/bridal-makeup.jpg",
-        },
-        {
-          id: 8,
-          title: "Special Event Makeup",
-          description: "Glamorous looks for parties and events",
-          price: "From $65",
-          image: "/images/event-makeup.jpg",
-        },
-        {
-          id: 9,
-          title: "Nail Art & Manicure",
-          description: "Creative nail designs and professional manicures",
-          price: "From $25",
-          image: "/images/nail-art.jpg",
-        },
-      ],
+      description: "Professional makeup for any occasion",
     },
-  ];
+    NAILS: {
+      title: "Nail Services",
+      subtitle: "Perfect Your Nails",
+      description: "Professional nail care and artistic designs",
+    },
+    MASSAGE: {
+      title: "Massage Therapy",
+      subtitle: "Relax & Rejuvenate",
+      description: "Therapeutic massage treatments for wellness",
+    },
+    SPA: {
+      title: "Spa Treatments",
+      subtitle: "Ultimate Relaxation",
+      description: "Luxurious spa experiences and treatments",
+    },
+    BROWS: {
+      title: "Brow Services",
+      subtitle: "Frame Your Face",
+      description: "Expert brow shaping and enhancement",
+    },
+    WAXING: {
+      title: "Waxing Services",
+      subtitle: "Smooth & Silky",
+      description: "Professional hair removal services",
+    },
+    TANNING: {
+      title: "Tanning Services",
+      subtitle: "Golden Glow",
+      description: "Safe and natural-looking tanning solutions",
+    },
+  };
+
+  // Fetch services data and settings on component mount
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+
+        // Fetch both services and settings
+        const [featuredServices, settings] = await Promise.all([
+          servicesService.getFeaturedServicesByCategory(3),
+          settingsService.getSettings(),
+        ]);
+
+        setShowPrices(settings.showPrices);
+
+        const categories: ServiceCategory[] = Object.keys(featuredServices)
+          .slice(0, 4) // Limit to only 4 categories
+          .map((categoryKey) => {
+            const displayInfo = categoryDisplayInfo[categoryKey] || {
+              title: categoryKey.charAt(0) + categoryKey.slice(1).toLowerCase(),
+              subtitle: `${
+                categoryKey.charAt(0) + categoryKey.slice(1).toLowerCase()
+              } Services`,
+              description: `Professional ${categoryKey.toLowerCase()} services`,
+            };
+
+            return {
+              id: categoryKey.toLowerCase() + "-services",
+              title: displayInfo.title,
+              subtitle: displayInfo.subtitle,
+              description: displayInfo.description,
+              services: featuredServices[categoryKey],
+            };
+          });
+
+        setServiceCategories(categories);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (sectionsRef.current.length === 0) return;
@@ -176,8 +197,8 @@ export default function Services() {
   // Carousel functionality useEffect
   useEffect(() => {
     // Initialize active slides
-    const initialActiveSlides: {[key: string]: number} = {};
-    serviceCategories.forEach(category => {
+    const initialActiveSlides: { [key: string]: number } = {};
+    serviceCategories.forEach((category) => {
       initialActiveSlides[category.id] = 0;
     });
     setActiveSlides(initialActiveSlides);
@@ -188,20 +209,24 @@ export default function Services() {
       if (!container) return;
 
       const scrollLeft = container.scrollLeft;
-      const cardWidth = container.children[0]?.getBoundingClientRect().width || 0;
-      
+      const cardWidth =
+        container.children[0]?.getBoundingClientRect().width || 0;
+
       // Dynamic gap based on screen width
       let gap = 30; // Default for >1024px
       if (window.innerWidth <= 320) gap = 15;
       else if (window.innerWidth <= 480) gap = 20;
       else if (window.innerWidth <= 768) gap = 25;
       else if (window.innerWidth <= 1024) gap = 30;
-      
+
       const activeIndex = Math.round(scrollLeft / (cardWidth + gap));
-      
-      setActiveSlides(prev => ({
+
+      setActiveSlides((prev) => ({
         ...prev,
-        [categoryId]: Math.max(0, Math.min(activeIndex, container.children.length - 1))
+        [categoryId]: Math.max(
+          0,
+          Math.min(activeIndex, container.children.length - 1)
+        ),
       }));
     };
 
@@ -209,12 +234,14 @@ export default function Services() {
 
     // Set up scroll listeners with a delay to ensure DOM is ready
     const setupListeners = () => {
-      serviceCategories.forEach(category => {
+      serviceCategories.forEach((category) => {
         const container = document.getElementById(`services-${category.id}`);
         if (container) {
           const listener = () => handleCarouselScroll(category.id);
-          container.addEventListener('scroll', listener, { passive: true });
-          scrollListeners.push(() => container.removeEventListener('scroll', listener));
+          container.addEventListener("scroll", listener, { passive: true });
+          scrollListeners.push(() =>
+            container.removeEventListener("scroll", listener)
+          );
         }
       });
     };
@@ -224,7 +251,7 @@ export default function Services() {
 
     return () => {
       clearTimeout(timeoutId);
-      scrollListeners.forEach(cleanup => cleanup());
+      scrollListeners.forEach((cleanup) => cleanup());
     };
   }, []);
 
@@ -238,34 +265,32 @@ export default function Services() {
     scrollTo(`#${categoryId}`, { duration: 1.5 });
   };
 
+  if (loading) {
+    return (
+      <section id="services" className={styles.servicesWrapper}>
+        <div className={styles.loadingContainer}>
+          <div className={styles.loader}>Loading Services...</div>
+        </div>
+      </section>
+    );
+  }
+
+  if (serviceCategories.length === 0) {
+    return (
+      <section id="services" className={styles.servicesWrapper}>
+        <div className={styles.errorContainer}>
+          <p>No services available at the moment.</p>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section
       id="services"
       className={styles.servicesWrapper}
       ref={containerRef}
     >
-      {/* Compact Navigation for service categories */}
-      <div
-        className={`${styles.serviceNavigation} ${
-          isNavCompact ? styles.compact : ""
-        }`}
-        ref={navRef}
-      >
-        <div className={styles.navContainer}>
-          <div className={styles.categoryButtons}>
-            {serviceCategories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => scrollToCategory(category.id)}
-                className={styles.categoryNavButton}
-              >
-                {category.title}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* Full-screen service category sections */}
       {serviceCategories.map((category, index) => (
         <div
@@ -284,7 +309,10 @@ export default function Services() {
             </div>
 
             <div className={styles.servicesContainer}>
-              <div className={styles.servicesGrid} id={`services-${category.id}`}>
+              <div
+                className={styles.servicesGrid}
+                id={`services-${category.id}`}
+              >
                 {category.services.map((service, serviceIndex) => (
                   <div key={service.id} className={styles.serviceCard}>
                     <div className={styles.serviceImageContainer}>
@@ -294,9 +322,12 @@ export default function Services() {
                         className={styles.serviceImage}
                       />
                       <div className={styles.serviceOverlay}>
-                        <span className={styles.servicePrice}>
-                          {service.price}
-                        </span>
+                        <button
+                          className={styles.serviceOverlayButton}
+                          onClick={() => (window.location.href = "/services")}
+                        >
+                          Book Now
+                        </button>
                       </div>
                     </div>
                     <div className={styles.serviceContent}>
@@ -304,59 +335,66 @@ export default function Services() {
                       <p className={styles.serviceDescription}>
                         {service.description}
                       </p>
-                      <button className={styles.serviceButton}>Book Now</button>
+
+                      <div className={styles.serviceDetails}>
+                        <div className={styles.serviceMeta}>
+                          <span className={styles.duration}>
+                            ⏱ {service.duration}
+                          </span>
+                          {showPrices ? (
+                            <span className={styles.price}>
+                              ${service.price}
+                            </span>
+                          ) : (
+                            <span className={styles.contactPrice}>
+                              Contact for pricing
+                            </span>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
-              
+
               {/* Slider Navigation Dots - Only show on mobile */}
               <div className={styles.sliderNavigation}>
                 {category.services.map((_, dotIndex) => (
                   <button
                     key={dotIndex}
                     className={`${styles.sliderDot} ${
-                      activeSlides[category.id] === dotIndex ? styles.active : ''
+                      activeSlides[category.id] === dotIndex
+                        ? styles.active
+                        : ""
                     }`}
                     onClick={() => {
-                      const container = document.getElementById(`services-${category.id}`);
-                      const cardWidth = container?.children[0]?.getBoundingClientRect().width || 0;
-                      
+                      const container = document.getElementById(
+                        `services-${category.id}`
+                      );
+                      const cardWidth =
+                        container?.children[0]?.getBoundingClientRect().width ||
+                        0;
+
                       // Dynamic gap based on screen width
                       let gap = 30; // Default for >1024px
                       if (window.innerWidth <= 320) gap = 15;
                       else if (window.innerWidth <= 480) gap = 20;
                       else if (window.innerWidth <= 768) gap = 25;
                       else if (window.innerWidth <= 1024) gap = 30;
-                      
+
                       container?.scrollTo({
                         left: dotIndex * (cardWidth + gap),
-                        behavior: 'smooth'
+                        behavior: "smooth",
                       });
-                      setActiveSlides(prev => ({
+                      setActiveSlides((prev) => ({
                         ...prev,
-                        [category.id]: dotIndex
+                        [category.id]: dotIndex,
                       }));
                     }}
                   />
                 ))}
               </div>
             </div>
-
-            {/* Scroll indicator for next section */}
-            {index < serviceCategories.length - 1 && (
-              <div
-                className={styles.scrollIndicator}
-                onClick={() =>
-                  scrollToCategory(serviceCategories[index + 1].id)
-                }
-              >
-                <span>Next Category</span>
-                <div className={styles.scrollArrow}>
-                  <i className="ri-arrow-down-line"></i>
-                </div>
-              </div>
-            )}
           </div>
         </div>
       ))}

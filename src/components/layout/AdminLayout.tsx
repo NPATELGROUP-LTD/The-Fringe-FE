@@ -78,6 +78,11 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <span className={styles.navIcon}>🏆</span>
             <span className={styles.navText}>Certificates</span>
           </Link>
+
+          <Link href="/admin/settings" className={styles.navLink} title="Settings">
+            <span className={styles.navIcon}>⚙️</span>
+            <span className={styles.navText}>Settings</span>
+          </Link>
         </nav>
 
         <div className={styles.sidebarFooter}>

@@ -92,6 +92,30 @@ export default function StudentLoginPage() {
             </button>
           </form>
 
+          <div className={styles.forgotPassword}>
+            <button
+              type="button"
+              onClick={() => {
+                const email = prompt("Enter your email address:");
+                if (email) {
+                  // API call to send reset email
+                  fetch("/api/student/forgot-password", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email }),
+                  }).then(() => {
+                    alert("Password reset instructions sent to your email!");
+                  }).catch(() => {
+                    alert("Failed to send reset email. Please try again.");
+                  });
+                }
+              }}
+              className={styles.forgotLink}
+            >
+              Forgot Password?
+            </button>
+          </div>
+
           <div className={styles.footer}>
             <p>
               Need help?{" "}
