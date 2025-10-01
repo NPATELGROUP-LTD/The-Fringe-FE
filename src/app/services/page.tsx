@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Layout from "../../components/layout/Layout";
 import styles from "./Services.module.css";
 import { servicesService } from "@/services/services.service";
+import { settingsService } from "@/services/settings.service";
 import type { Service } from "@/services/services.service";
 import { mockServices as fallbackServices } from "@/services/mockData";
 import { useAuth } from "@/hooks/useAuth";
@@ -33,6 +34,7 @@ export default function ServicesPage() {
   const [error, setError] = useState("");
   const { user, isAuthenticated } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [showPrices, setShowPrices] = useState(true);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -52,12 +54,32 @@ export default function ServicesPage() {
     };
   }, [dropdownOpen]);
 
+  // Handle URL parameters for category filtering
   useEffect(() => {
-    const fetchServices = async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryParam = urlParams.get('category');
+    
+    if (categoryParam) {
+      // Check if the category exists in our categories
+      const categoryExists = serviceCategoriesFromData.some(cat => cat.id === categoryParam);
+      if (categoryExists) {
+        setSelectedCategories([categoryParam]);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
       try {
-        const data = await servicesService.getAllServices();
-        if (data && data.length > 0) {
-          setServices(data);
+        const [servicesData, settings] = await Promise.all([
+          servicesService.getAllServices(),
+          settingsService.getSettings()
+        ]);
+        
+        setShowPrices(settings.showPrices);
+        
+        if (servicesData && servicesData.length > 0) {
+          setServices(servicesData);
         } else {
           console.log("No services found in API, using mock data");
           setServices(fallbackServices);
@@ -70,7 +92,7 @@ export default function ServicesPage() {
       }
     };
 
-    fetchServices();
+    fetchData();
   }, []);
 
   const handleBooking = (serviceId: string) => {
@@ -229,7 +251,11 @@ export default function ServicesPage() {
                       <span className={styles.duration}>
                         ⏱ {service.duration}
                       </span>
-                      <span className={styles.price}>${service.price}</span>
+                      {showPrices ? (
+                        <span className={styles.price}>${service.price}</span>
+                      ) : (
+                        <span className={styles.contactPrice}>Contact for pricing</span>
+                      )}
                     </div>
                   </div>
                 </div>

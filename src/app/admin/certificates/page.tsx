@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import AdminLayout from "../../../components/layout/AdminLayout";
+import LoadingSpinner, { LoadingOverlay } from "../../../components/ui/LoadingSpinner";
+import { uploadFile, apiCall, API_CONFIG } from "../../../config/api";
 import styles from "./Certificates.module.css";
 
 interface Certificate {
@@ -32,12 +34,14 @@ export default function CertificatesPage() {
   const [students, setStudents] = useState<Student[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showGenerateModal, setShowGenerateModal] = useState(false);
-  const [showBulkModal, setShowBulkModal] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
-  const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
   const [filterStatus, setFilterStatus] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
-  const [isGenerating, setIsGenerating] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [certificateFile, setCertificateFile] = useState<File | null>(null);
+  const [uploadMessage, setUploadMessage] = useState("");
+  const [isDragOver, setIsDragOver] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const router = useRouter();
 
   useEffect(() => {
@@ -51,86 +55,85 @@ export default function CertificatesPage() {
 
   const fetchCertificates = async () => {
     try {
-      const [certsResponse, studentsResponse] = await Promise.all([
-        fetch("/api/admin/certificates"),
-        fetch("/api/admin/students"),
+      // Use external API endpoints
+      const [certsData, studentsData] = await Promise.all([
+        apiCall(API_CONFIG.ENDPOINTS.ADMIN.CERTIFICATES.LIST).catch(() => ({ certificates: [] })),
+        apiCall(API_CONFIG.ENDPOINTS.ADMIN.STUDENTS.LIST).catch(() => ({ students: [] }))
       ]);
 
-      const certsData = await certsResponse.json();
-      const studentsData = await studentsResponse.json();
-
-      if (certsResponse.ok) {
-        setCertificates(certsData.certificates || []);
-      }
-
-      if (studentsResponse.ok) {
-        // Filter students who are eligible for certificates (completed courses)
-        const eligibleStudents = studentsData.students.filter(
-          (student: Student) => student.progress >= 100
-        );
-        setStudents(eligibleStudents);
-      }
+      setCertificates(certsData.certificates || []);
+      
+      // Filter students who are eligible for certificates (completed courses)
+      const eligibleStudents = (studentsData.students || []).filter(
+        (student: Student) => student.progress >= 100
+      );
+      setStudents(eligibleStudents);
+      
     } catch (error) {
       console.error("Failed to fetch data:", error);
+      // Set some mock data for development
+      setStudents([
+        {
+          id: "1",
+          name: "John Doe",
+          email: "john@example.com",
+          course: "Hair Styling Fundamentals",
+          progress: 100,
+          status: "completed"
+        },
+        {
+          id: "2", 
+          name: "Jane Smith",
+          email: "jane@example.com",
+          course: "Makeup Artistry",
+          progress: 100,
+          status: "completed"
+        }
+      ]);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleGenerateCertificate = async (studentId: string) => {
-    setIsGenerating(true);
-    try {
-      const response = await fetch("/api/admin/certificates/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ studentId }),
-      });
-
-      if (response.ok) {
-        fetchCertificates();
-        setShowGenerateModal(false);
-        setSelectedStudent(null);
-        alert("Certificate generated successfully!");
-      } else {
-        const data = await response.json();
-        alert(data.error || "Failed to generate certificate");
-      }
-    } catch (error) {
-      alert("Error generating certificate");
-    } finally {
-      setIsGenerating(false);
-    }
-  };
-
-  const handleBulkGenerate = async () => {
-    if (selectedStudents.length === 0) {
-      alert("Please select students to generate certificates for.");
+  const handleUploadCertificate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedStudent || !certificateFile) {
+      setUploadMessage("Error: Please select a student and choose a certificate file.");
+      setTimeout(() => setUploadMessage(""), 5000);
       return;
     }
 
-    setIsGenerating(true);
+    setIsUploading(true);
+    setUploadProgress(0);
+    
     try {
-      const response = await fetch("/api/admin/certificates/bulk-generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ studentIds: selectedStudents }),
-      });
+      const formData = new FormData();
+      formData.append("certificate", certificateFile);
+      formData.append("studentId", selectedStudent.id);
+      formData.append("studentName", selectedStudent.name);
+      formData.append("courseName", selectedStudent.course);
 
-      if (response.ok) {
-        fetchCertificates();
-        setShowBulkModal(false);
-        setSelectedStudents([]);
-        alert(
-          `Generated ${selectedStudents.length} certificates successfully!`
-        );
-      } else {
-        const data = await response.json();
-        alert(data.error || "Failed to generate certificates");
-      }
-    } catch (error) {
-      alert("Error generating certificates");
+      const response = await uploadFile(
+        API_CONFIG.ENDPOINTS.ADMIN.CERTIFICATES.UPLOAD,
+        formData,
+        (progress) => setUploadProgress(progress)
+      );
+
+      // Success
+      fetchCertificates();
+      setShowGenerateModal(false);
+      setSelectedStudent(null);
+      setCertificateFile(null);
+      setUploadProgress(0);
+      setUploadMessage("Certificate uploaded successfully!");
+      setTimeout(() => setUploadMessage(""), 5000);
+      
+    } catch (error: any) {
+      setUploadProgress(0);
+      setUploadMessage(`Error: ${error.message || "Failed to upload certificate"}`);
+      setTimeout(() => setUploadMessage(""), 5000);
     } finally {
-      setIsGenerating(false);
+      setIsUploading(false);
     }
   };
 
@@ -152,14 +155,6 @@ export default function CertificatesPage() {
         alert("Error revoking certificate");
       }
     }
-  };
-
-  const toggleStudentSelection = (studentId: string) => {
-    setSelectedStudents((prev) =>
-      prev.includes(studentId)
-        ? prev.filter((id) => id !== studentId)
-        : [...prev, studentId]
-    );
   };
 
   const filteredCertificates = certificates.filter((cert) => {
@@ -186,21 +181,22 @@ export default function CertificatesPage() {
           <h1 className={styles.title}>Certificates Management</h1>
           <div className={styles.headerActions}>
             <button
-              className="btn btn-secondary"
-              onClick={() => setShowBulkModal(true)}
-              disabled={students.length === 0}
-            >
-              Bulk Generate
-            </button>
-            <button
               className="btn btn-primary"
               onClick={() => setShowGenerateModal(true)}
               disabled={students.length === 0}
             >
-              Generate Certificate
+              <i className="ri-upload-line"></i>
+              Upload Certificate
             </button>
           </div>
         </div>
+
+        {/* Upload Message */}
+        {uploadMessage && (
+          <div className={`${styles.uploadMessage} ${uploadMessage.includes('Error') ? styles.error : styles.success}`}>
+            {uploadMessage}
+          </div>
+        )}
 
         {/* Filters */}
         <div className={styles.filters}>
@@ -286,25 +282,35 @@ export default function CertificatesPage() {
           )}
         </div>
 
-        {/* Generate Certificate Modal */}
+        {/* Upload Progress Overlay */}
+      {isUploading && uploadProgress > 0 && (
+        <LoadingOverlay 
+          text="Uploading Certificate" 
+          progress={uploadProgress}
+        />
+      )}
+
+      {/* Upload Certificate Modal */}
         {showGenerateModal && (
           <div className={styles.modal}>
             <div className={styles.modalContent}>
               <div className={styles.modalHeader}>
-                <h2>Generate Certificate</h2>
+                <h2>Upload Certificate</h2>
                 <button
                   onClick={() => {
                     setShowGenerateModal(false);
                     setSelectedStudent(null);
+                    setCertificateFile(null);
+                    setUploadMessage("");
                   }}
                   className={styles.closeBtn}
-                  disabled={isGenerating}
+                  disabled={isUploading}
                 >
                   ×
                 </button>
               </div>
 
-              <div className={styles.modalBody}>
+              <form onSubmit={handleUploadCertificate} className={styles.modalBody}>
                 <div className={styles.formGroup}>
                   <label>Select Student</label>
                   <select
@@ -328,9 +334,99 @@ export default function CertificatesPage() {
                   </select>
                 </div>
 
+                <div className={styles.formGroup}>
+                  <label>Certificate File</label>
+                  <div 
+                    className={`${styles.fileUploadArea} ${isDragOver ? styles.dragOver : ''}`}
+                    onDragOver={(e) => {
+                      e.preventDefault();
+                      setIsDragOver(true);
+                    }}
+                    onDragLeave={(e) => {
+                      e.preventDefault();
+                      setIsDragOver(false);
+                    }}
+                    onDrop={(e) => {
+                      e.preventDefault();
+                      setIsDragOver(false);
+                      
+                      const files = e.dataTransfer.files;
+                      if (files.length > 0) {
+                        const file = files[0];
+                        
+                        // Validate file size (10MB max)
+                        if (file.size > 10 * 1024 * 1024) {
+                          setUploadMessage("Error: File size must be less than 10MB");
+                          setTimeout(() => setUploadMessage(""), 5000);
+                          return;
+                        }
+                        
+                        // Validate file type
+                        const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
+                        if (!allowedTypes.includes(file.type)) {
+                          setUploadMessage("Error: Please select a valid file type (PDF, JPG, JPEG, PNG)");
+                          setTimeout(() => setUploadMessage(""), 5000);
+                          return;
+                        }
+                        
+                        setCertificateFile(file);
+                      }
+                    }}
+                  >
+                    <input
+                      type="file"
+                      accept=".pdf,.jpg,.jpeg,.png"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          // Validate file size (10MB max)
+                          if (file.size > 10 * 1024 * 1024) {
+                            setUploadMessage("Error: File size must be less than 10MB");
+                            setTimeout(() => setUploadMessage(""), 5000);
+                            e.target.value = "";
+                            return;
+                          }
+                          
+                          // Validate file type
+                          const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
+                          if (!allowedTypes.includes(file.type)) {
+                            setUploadMessage("Error: Please select a valid file type (PDF, JPG, JPEG, PNG)");
+                            setTimeout(() => setUploadMessage(""), 5000);
+                            e.target.value = "";
+                            return;
+                          }
+                          
+                          setCertificateFile(file);
+                        } else {
+                          setCertificateFile(null);
+                        }
+                      }}
+                      required
+                      className={styles.fileInput}
+                      id="certificate-file"
+                    />
+                    <label htmlFor="certificate-file" className={styles.fileUploadLabel}>
+                      <div className={styles.uploadIcon}>
+                        <i className={certificateFile ? "ri-file-check-line" : "ri-upload-cloud-line"}></i>
+                      </div>
+                      <div className={styles.uploadText}>
+                        <span className={styles.uploadTitle}>
+                          {certificateFile ? certificateFile.name : "Choose certificate file"}
+                        </span>
+                        <span className={styles.uploadSubtitle}>
+                          {isDragOver ? "Drop file here" : "or drag and drop here"}
+                        </span>
+                      </div>
+                    </label>
+                  </div>
+                  <small className={styles.fileNote}>
+                    Supported formats: PDF, JPG, JPEG, PNG (Max: 10MB)
+                  </small>
+                </div>
+
                 {selectedStudent && (
                   <div className={styles.studentPreview}>
-                    <h4>Certificate Preview</h4>
+                    <h4>Student Information</h4>
                     <div className={styles.previewInfo}>
                       <p>
                         <strong>Student:</strong> {selectedStudent.name}
@@ -347,120 +443,60 @@ export default function CertificatesPage() {
                     </div>
                   </div>
                 )}
-              </div>
 
-              <div className={styles.formActions}>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowGenerateModal(false);
-                    setSelectedStudent(null);
-                  }}
-                  className="btn btn-secondary"
-                  disabled={isGenerating}
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() =>
-                    selectedStudent &&
-                    handleGenerateCertificate(selectedStudent.id)
-                  }
-                  className="btn btn-primary"
-                  disabled={!selectedStudent || isGenerating}
-                >
-                  {isGenerating ? "Generating..." : "Generate Certificate"}
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Bulk Generate Modal */}
-        {showBulkModal && (
-          <div className={styles.modal}>
-            <div className={styles.modalContent}>
-              <div className={styles.modalHeader}>
-                <h2>Bulk Generate Certificates</h2>
-                <button
-                  onClick={() => {
-                    setShowBulkModal(false);
-                    setSelectedStudents([]);
-                  }}
-                  className={styles.closeBtn}
-                  disabled={isGenerating}
-                >
-                  ×
-                </button>
-              </div>
-
-              <div className={styles.modalBody}>
-                <p className={styles.bulkInfo}>
-                  Select students to generate certificates for. Only students
-                  who have completed their courses (100% progress) are shown.
-                </p>
-
-                <div className={styles.studentsList}>
-                  {students.map((student) => (
-                    <div key={student.id} className={styles.studentItem}>
-                      <label className={styles.checkboxLabel}>
-                        <input
-                          type="checkbox"
-                          checked={selectedStudents.includes(student.id)}
-                          onChange={() => toggleStudentSelection(student.id)}
-                          className={styles.checkbox}
-                        />
-                        <div className={styles.studentInfo}>
-                          <span className={styles.studentName}>
-                            {student.name}
-                          </span>
-                          <span className={styles.studentCourse}>
-                            {student.course}
-                          </span>
-                          <span className={styles.studentProgress}>
-                            {student.progress}% complete
-                          </span>
-                        </div>
-                      </label>
+                {certificateFile && (
+                  <div className={styles.filePreview}>
+                    <h4>Selected File</h4>
+                    <div className={styles.fileInfo}>
+                      <p>
+                        <strong>File Name:</strong> {certificateFile.name}
+                      </p>
+                      <p>
+                        <strong>File Size:</strong> {(certificateFile.size / 1024 / 1024).toFixed(2)} MB
+                      </p>
+                      <p>
+                        <strong>File Type:</strong> {certificateFile.type}
+                      </p>
                     </div>
-                  ))}
-                </div>
-
-                {selectedStudents.length > 0 && (
-                  <div className={styles.selectionSummary}>
-                    <p>
-                      <strong>{selectedStudents.length}</strong> students
-                      selected for certificate generation.
-                    </p>
                   </div>
                 )}
-              </div>
 
-              <div className={styles.formActions}>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowBulkModal(false);
-                    setSelectedStudents([]);
-                  }}
-                  className="btn btn-secondary"
-                  disabled={isGenerating}
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleBulkGenerate}
-                  className="btn btn-primary"
-                  disabled={selectedStudents.length === 0 || isGenerating}
-                >
-                  {isGenerating
-                    ? "Generating..."
-                    : `Generate ${selectedStudents.length} Certificates`}
-                </button>
-              </div>
+                <div className={styles.formActions}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowGenerateModal(false);
+                      setSelectedStudent(null);
+                      setCertificateFile(null);
+                      setUploadMessage("");
+                    }}
+                    className="btn btn-secondary"
+                    disabled={isUploading}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    disabled={!selectedStudent || !certificateFile || isUploading}
+                  >
+                    {isUploading ? (
+                      <LoadingSpinner 
+                        size="small" 
+                        color="white" 
+                        text={uploadProgress > 0 ? `Uploading ${Math.round(uploadProgress)}%` : "Uploading..."}
+                      />
+                    ) : (
+                      "Upload Certificate"
+                    )}
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         )}
+
+
       </div>
     </AdminLayout>
   );

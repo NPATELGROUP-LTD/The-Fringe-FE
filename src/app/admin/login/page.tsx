@@ -89,6 +89,30 @@ export default function AdminLoginPage() {
             </button>
           </form>
 
+          <div className={styles.forgotPassword}>
+            <button
+              type="button"
+              onClick={() => {
+                const email = prompt("Enter your admin email address:");
+                if (email) {
+                  // API call to send reset email
+                  fetch("/api/admin/forgot-password", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email }),
+                  }).then(() => {
+                    alert("Password reset instructions sent to your email!");
+                  }).catch(() => {
+                    alert("Failed to send reset email. Please try again.");
+                  });
+                }
+              }}
+              className={styles.forgotLink}
+            >
+              Forgot Password?
+            </button>
+          </div>
+
           <div className={styles.footer}>
             <p>
               <a href="/" className={styles.backLink}>

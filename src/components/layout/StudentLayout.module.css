@@ -1,133 +1,157 @@
 .studentLayout {
     display: flex;
     min-height: 100vh;
-    background-color: var(--color-primary-bg);
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
 }
 
 .sidebar {
     width: 280px;
-    background-color: var(--color-secondary-bg);
-    border-right: 1px solid var(--color-border);
+    background: rgba(20, 20, 20, 0.95);
+    backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     flex-direction: column;
     position: fixed;
     height: 100vh;
     z-index: 1000;
-    transition: transform var(--transition-normal);
+    transition: all 0.3s ease;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
 }
 
 .sidebar.closed {
-    transform: translateX(-240px);
-    width: 60px;
-}
-
-.toggleButton {
-    background: none;
-    border: none;
-    color: var(--color-text-primary);
-    font-size: var(--font-size-lg);
-    cursor: pointer;
-    padding: var(--spacing-sm);
-    border-radius: var(--radius-md);
-    transition: background-color var(--transition-normal);
-    position: fixed;
-    top: var(--spacing-md);
-    left: var(--spacing-md);
-    z-index: 1001;
-    background-color: var(--color-secondary-bg);
-    border: 1px solid var(--color-border);
-}
-
-.toggleButton:hover {
-    background-color: var(--color-tertiary-bg);
+    width: 80px;
 }
 
 .sidebarHeader {
-    padding: var(--spacing-xl);
-    border-bottom: 1px solid var(--color-border);
+    padding: 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    padding-left: 60px;
+    justify-content: space-between;
+    min-height: 80px;
+}
+
+.toggleButton {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    gap: 3px;
+}
+
+.toggleButton:hover {
+    background: rgba(208, 180, 159, 0.2);
+    border-color: rgba(208, 180, 159, 0.4);
+}
+
+.hamburgerLine {
+    width: 16px;
+    height: 2px;
+    background: #ffffff;
+    border-radius: 1px;
+    transition: all 0.3s ease;
 }
 
 .logo {
     text-decoration: none;
     display: flex;
     flex-direction: column;
+    transition: opacity 0.3s ease;
 }
 
 .logoText {
-    font-size: var(--font-size-xl);
+    font-size: 1.4rem;
     font-weight: 700;
-    color: var(--color-text-primary);
+    color: #ffffff;
+    background: linear-gradient(135deg, #ffffff 0%, #D0B49F 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .logoSubtext {
-    font-size: var(--font-size-sm);
-    color: var(--color-accent-primary);
+    font-size: 0.8rem;
+    color: rgba(208, 180, 159, 0.8);
+    font-weight: 500;
 }
 
 .nav {
     flex: 1;
-    padding: var(--spacing-lg);
+    padding: 16px;
 }
 
 .navLink {
     display: flex;
     align-items: center;
-    gap: var(--spacing-md);
-    padding: var(--spacing-md);
-    color: var(--color-text-secondary);
+    gap: 16px;
+    padding: 12px 16px;
+    color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
-    border-radius: var(--radius-md);
-    transition: all var(--transition-normal);
-    margin-bottom: var(--spacing-xs);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    margin-bottom: 4px;
+    font-weight: 500;
+    position: relative;
 }
 
 .navLink:hover {
-    background-color: var(--color-tertiary-bg);
-    color: var(--color-text-primary);
+    background: rgba(208, 180, 159, 0.15);
+    color: #ffffff;
+    transform: translateX(4px);
 }
 
 .navIcon {
-    font-size: var(--font-size-lg);
-    width: 20px;
+    font-size: 1.2rem;
+    width: 24px;
     text-align: center;
+    flex-shrink: 0;
 }
 
 .navText {
     font-weight: 500;
+    transition: opacity 0.3s ease;
 }
 
 .sidebarFooter {
-    padding: var(--spacing-lg);
-    border-top: 1px solid var(--color-border);
+    padding: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .logoutButton {
     display: flex;
     align-items: center;
-    gap: var(--spacing-md);
-    padding: var(--spacing-md);
+    gap: 16px;
+    padding: 12px 16px;
     background: none;
     border: none;
-    color: var(--color-text-secondary);
+    color: rgba(255, 255, 255, 0.7);
     cursor: pointer;
-    border-radius: var(--radius-md);
-    transition: all var(--transition-normal);
+    border-radius: 12px;
+    transition: all 0.3s ease;
     width: 100%;
-    font-size: var(--font-size-base);
+    font-size: 1rem;
+    font-weight: 500;
 }
 
 .logoutButton:hover {
-    background-color: var(--color-tertiary-bg);
-    color: var(--color-text-primary);
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    transform: translateX(4px);
 }
 
 .main {
     flex: 1;
-    transition: margin-left var(--transition-normal);
+    transition: margin-left 0.3s ease;
+    background: transparent;
 }
 
 .mainWithSidebar {
@@ -135,20 +159,116 @@
 }
 
 .mainFullWidth {
-    margin-left: 60px;
+    margin-left: 80px;
 }
 
 .content {
-    padding: var(--spacing-xl);
+    padding: 24px;
     min-height: 100vh;
-    padding-top: 80px;
+    background: transparent;
+}
+
+/* When sidebar is closed, hide text and adjust layout */
+.sidebar.closed .logoText,
+.sidebar.closed .logoSubtext,
+.sidebar.closed .navText {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebar.closed .sidebarHeader {
+    justify-content: center;
+    padding: 24px 12px;
+}
+
+.sidebar.closed .navLink {
+    justify-content: center;
+    padding: 12px;
+    gap: 0;
+}
+
+.sidebar.closed .logoutButton {
+    justify-content: center;
+    padding: 12px;
+    gap: 0;
+}
+
+.sidebar.closed .nav {
+    padding: 16px 8px;
+}
+
+.sidebar.closed .sidebarFooter {
+    padding: 16px 8px;
+}
+
+/* Mobile Toggle Button - Always visible on mobile */
+.mobileToggle {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 10000;
+    background: rgba(20, 20, 20, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    cursor: pointer;
+    padding: 12px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    gap: 4px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.mobileToggle:hover {
+    background: rgba(208, 180, 159, 0.2);
+    border-color: rgba(208, 180, 159, 0.4);
+    transform: scale(1.05);
+}
+
+.mobileToggle .hamburgerLine {
+    width: 20px;
+    height: 2px;
+    background: #ffffff;
+    border-radius: 1px;
+    transition: all 0.3s ease;
+}
+
+/* Sidebar Overlay for mobile */
+.sidebarOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 9998;
 }
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
+    .mobileToggle {
+        display: flex;
+    }
+
+    .sidebarOverlay {
+        display: block;
+    }
+
     .sidebar {
-        width: 100%;
+        width: 320px;
         transform: translateX(-100%);
+        z-index: 9999;
+        position: fixed;
+        left: 0;
+        top: 0;
     }
 
     .sidebar.open {
@@ -169,29 +289,23 @@
     }
 
     .content {
-        padding: var(--spacing-lg);
-        padding-top: 80px;
+        padding: 80px 16px 16px 16px; /* Add top padding for mobile toggle */
     }
-}
 
-/* When sidebar is closed, hide text */
-.sidebar.closed .logoText,
-.sidebar.closed .logoSubtext,
-.sidebar.closed .navText {
-    display: none;
-}
+    .sidebarHeader {
+        padding: 24px 20px;
+    }
 
-.sidebar.closed .sidebarHeader {
-    justify-content: flex-start;
-    padding-left: 60px;
-}
+    .nav {
+        padding: 16px 12px;
+    }
 
-.sidebar.closed .navLink {
-    justify-content: center;
-    padding: var(--spacing-md) var(--spacing-sm);
-}
+    .sidebarFooter {
+        padding: 16px 12px;
+    }
 
-.sidebar.closed .logoutButton {
-    justify-content: center;
-    padding: var(--spacing-md) var(--spacing-sm);
+    /* Hide desktop toggle on mobile */
+    .sidebarHeader .toggleButton {
+        display: none;
+    }
 }

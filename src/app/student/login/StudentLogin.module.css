@@ -77,6 +77,25 @@
     cursor: not-allowed;
 }
 
+.forgotPassword {
+    text-align: center;
+    margin: var(--spacing-lg) 0;
+}
+
+.forgotLink {
+    background: none;
+    border: none;
+    color: var(--color-accent-primary);
+    text-decoration: underline;
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: color var(--transition-normal);
+}
+
+.forgotLink:hover {
+    color: var(--color-text-primary);
+}
+
 .footer {
     text-align: center;
     padding-top: var(--spacing-lg);

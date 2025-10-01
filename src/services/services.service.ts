@@ -30,6 +30,41 @@ export const servicesService = {
     }
   },
 
+  async getServicesByCategory(): Promise<{[key: string]: Service[]}> {
+    try {
+      const services = await this.getAllServices();
+      const servicesByCategory: {[key: string]: Service[]} = {};
+      
+      services.forEach(service => {
+        if (!servicesByCategory[service.category]) {
+          servicesByCategory[service.category] = [];
+        }
+        servicesByCategory[service.category].push(service);
+      });
+      
+      return servicesByCategory;
+    } catch (error) {
+      console.log('Error grouping services by category', error);
+      return {};
+    }
+  },
+
+  async getFeaturedServicesByCategory(limit: number = 3): Promise<{[key: string]: Service[]}> {
+    try {
+      const servicesByCategory = await this.getServicesByCategory();
+      const featuredServices: {[key: string]: Service[]} = {};
+      
+      Object.keys(servicesByCategory).forEach(category => {
+        featuredServices[category] = servicesByCategory[category].slice(0, limit);
+      });
+      
+      return featuredServices;
+    } catch (error) {
+      console.log('Error getting featured services by category', error);
+      return {};
+    }
+  },
+
   async getServiceById(id: string): Promise<Service> {
     try {
       return await fetchApi<Service>(`/services/${id}`);

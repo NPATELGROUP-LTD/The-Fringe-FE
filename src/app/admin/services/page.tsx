@@ -291,21 +291,40 @@ export default function ServicesPage() {
                 </div>
                 <div className={styles.formGroup}>
                   <label>Category</label>
-                  <select
-                    value={newService.category}
-                    onChange={(e) =>
-                      setNewService({ ...newService, category: e.target.value })
-                    }
-                    required
-                    className="input"
-                  >
-                    <option value="">Select Category</option>
-                    <option value="Hair">Hair</option>
-                    <option value="Makeup">Makeup</option>
-                    <option value="Nails">Nails</option>
-                    <option value="Skin Care">Skin Care</option>
-                    <option value="Bridal">Bridal</option>
-                  </select>
+                  <div className={styles.categoryInputGroup}>
+                    <select
+                      value={newService.category}
+                      onChange={(e) =>
+                        setNewService({ ...newService, category: e.target.value })
+                      }
+                      required
+                      className="input"
+                    >
+                      <option value="">Select Category</option>
+                      <option value="HAIR">Hair</option>
+                      <option value="MAKEUP">Makeup</option>
+                      <option value="NAILS">Nails</option>
+                      <option value="SKIN">Skin Care</option>
+                      <option value="MASSAGE">Massage</option>
+                      <option value="SPA">Spa</option>
+                      <option value="BROWS">Brows</option>
+                      <option value="WAXING">Waxing</option>
+                      <option value="TANNING">Tanning</option>
+                      <option value="custom">+ Add New Category</option>
+                    </select>
+                    {newService.category === 'custom' && (
+                      <input
+                        type="text"
+                        placeholder="Enter new category name"
+                        onChange={(e) => {
+                          const customCategory = e.target.value.toUpperCase().replace(/\s+/g, '_');
+                          setNewService({ ...newService, category: customCategory });
+                        }}
+                        className="input"
+                        style={{ marginTop: '8px' }}
+                      />
+                    )}
+                  </div>
                 </div>
                 <div className={styles.formActions}>
                   <button

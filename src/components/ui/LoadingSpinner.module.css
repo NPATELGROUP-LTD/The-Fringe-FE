@@ -1,0 +1,249 @@
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.loadingContainer.small {
+  gap: 8px;
+}
+
+.loadingContainer.medium {
+  gap: 12px;
+}
+
+.loadingContainer.large {
+  gap: 20px;
+}
+
+/* Spinner Styles */
+.spinner {
+  position: relative;
+  display: inline-block;
+}
+
+.spinner.small {
+  width: 24px;
+  height: 24px;
+}
+
+.spinner.medium {
+  width: 40px;
+  height: 40px;
+}
+
+.spinner.large {
+  width: 60px;
+  height: 60px;
+}
+
+.spinnerRing {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  animation: spin 1.5s linear infinite;
+}
+
+.spinner.small .spinnerRing {
+  width: 24px;
+  height: 24px;
+  border-width: 2px;
+}
+
+.spinner.medium .spinnerRing {
+  width: 40px;
+  height: 40px;
+  border-width: 3px;
+}
+
+.spinner.large .spinnerRing {
+  width: 60px;
+  height: 60px;
+  border-width: 4px;
+}
+
+/* Color variants */
+.spinner.primary .spinnerRing:nth-child(1) {
+  border-top-color: #D0B49F;
+  animation-delay: 0s;
+}
+
+.spinner.primary .spinnerRing:nth-child(2) {
+  border-top-color: rgba(208, 180, 159, 0.6);
+  animation-delay: -0.5s;
+}
+
+.spinner.primary .spinnerRing:nth-child(3) {
+  border-top-color: rgba(208, 180, 159, 0.3);
+  animation-delay: -1s;
+}
+
+.spinner.secondary .spinnerRing:nth-child(1) {
+  border-top-color: #ffffff;
+  animation-delay: 0s;
+}
+
+.spinner.secondary .spinnerRing:nth-child(2) {
+  border-top-color: rgba(255, 255, 255, 0.6);
+  animation-delay: -0.5s;
+}
+
+.spinner.secondary .spinnerRing:nth-child(3) {
+  border-top-color: rgba(255, 255, 255, 0.3);
+  animation-delay: -1s;
+}
+
+.spinner.white .spinnerRing:nth-child(1) {
+  border-top-color: #ffffff;
+  animation-delay: 0s;
+}
+
+.spinner.white .spinnerRing:nth-child(2) {
+  border-top-color: rgba(255, 255, 255, 0.7);
+  animation-delay: -0.5s;
+}
+
+.spinner.white .spinnerRing:nth-child(3) {
+  border-top-color: rgba(255, 255, 255, 0.4);
+  animation-delay: -1s;
+}
+
+/* Progress Bar Styles */
+.progressContainer {
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.progressBar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progressBar.large {
+  height: 12px;
+  border-radius: 6px;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #D0B49F 0%, #E6D3B7 100%);
+  border-radius: inherit;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.progressFill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+.progressBar.primary .progressFill {
+  background: linear-gradient(90deg, #D0B49F 0%, #E6D3B7 100%);
+}
+
+.progressBar.secondary .progressFill {
+  background: linear-gradient(90deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%);
+}
+
+.progressBar.white .progressFill {
+  background: #ffffff;
+}
+
+.progressText {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Loading Text */
+.loadingText {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  text-align: center;
+}
+
+.loadingContainer.small .loadingText {
+  font-size: 0.8rem;
+}
+
+.loadingContainer.medium .loadingText {
+  font-size: 0.9rem;
+}
+
+.loadingContainer.large .loadingText {
+  font-size: 1.1rem;
+}
+
+/* Loading Overlay */
+.loadingOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.overlayContent {
+  background: rgba(20, 20, 20, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Animations */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Pulse animation for loading states */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.loadingContainer.pulse {
+  animation: pulse 2s infinite;
+}

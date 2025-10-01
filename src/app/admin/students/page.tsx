@@ -34,7 +34,7 @@ export default function StudentsPage() {
     name: "",
     email: "",
     course: "",
-    password: "",
+    accessExpiryDate: "",
   });
   const [editStudent, setEditStudent] = useState({
     name: "",
@@ -79,7 +79,7 @@ export default function StudentsPage() {
 
       if (response.ok) {
         setShowAddForm(false);
-        setNewStudent({ name: "", email: "", course: "", password: "" });
+        setNewStudent({ name: "", email: "", course: "", accessExpiryDate: "" });
         fetchStudents();
         alert("Student added successfully!");
       } else {
@@ -414,17 +414,20 @@ export default function StudentsPage() {
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label>Password</label>
+                  <label>Access Expiry Date</label>
                   <input
-                    type="password"
-                    value={newStudent.password}
+                    type="date"
+                    value={newStudent.accessExpiryDate}
                     onChange={(e) =>
-                      setNewStudent({ ...newStudent, password: e.target.value })
+                      setNewStudent({ ...newStudent, accessExpiryDate: e.target.value })
                     }
                     required
                     className="input"
-                    placeholder="Enter password"
+                    min={new Date().toISOString().split('T')[0]}
                   />
+                  <small className={styles.fieldNote}>
+                    Student will receive an email to set their password and will have access until this date.
+                  </small>
                 </div>
 
                 <div className={styles.formActions}>
