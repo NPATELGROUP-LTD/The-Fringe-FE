@@ -67,14 +67,9 @@ export default function Header() {
       image: "https://picsum.photos/600/400?random=4",
     },
     {
-      link: "/team",
-      text: "Team",
-      image: "https://picsum.photos/600/400?random=5",
-    },
-    {
       link: "/contact",
       text: "Contact Us",
-      image: "https://picsum.photos/600/400?random=6",
+      image: "https://picsum.photos/600/400?random=5",
     },
   ];
 
@@ -138,15 +133,9 @@ export default function Header() {
             <div className={styles.headerNav_popup_left_content}>
               <div className={styles.headerNav_popup_left_content_top}>
                 <h1>The</h1>
+                <br />
                 <p>
-                  <span
-                    className={
-                      styles.headerNav_popup_left_content_top_p_firstLetter
-                    }
-                  >
-                    F
-                  </span>
-                  ringe
+                  Fringe
                 </p>
               </div>
             </div>

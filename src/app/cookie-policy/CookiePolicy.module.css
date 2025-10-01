@@ -1,0 +1,259 @@
+.cookiePage {
+  padding: 120px 0 80px 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 60px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.title {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #ffffff 0%, #D0B49F 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.lastUpdated {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.section {
+  margin-bottom: 40px;
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.section h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #D0B49F;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid rgba(208, 180, 159, 0.3);
+}
+
+.section h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 24px 0 12px 0;
+}
+
+.section p {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.7;
+  margin-bottom: 16px;
+  font-size: 1rem;
+}
+
+.section ul {
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
+.section li {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.section li::marker {
+  color: #D0B49F;
+}
+
+.link {
+  color: #D0B49F;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid transparent;
+}
+
+.link:hover {
+  color: #E6D3B7;
+  border-bottom-color: #E6D3B7;
+}
+
+.cookieType {
+  margin: 32px 0;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.cookieType h3 {
+  color: #D0B49F;
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 1.1rem;
+}
+
+.cookieTable {
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  background: rgba(208, 180, 159, 0.2);
+  padding: 12px 16px;
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 0.9rem;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  padding: 12px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+}
+
+.tableRow:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.tableRow span:first-child {
+  font-family: 'Courier New', monospace;
+  color: #D0B49F;
+  font-weight: 500;
+}
+
+.contactInfo {
+  background: rgba(208, 180, 159, 0.1);
+  border: 1px solid rgba(208, 180, 159, 0.2);
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 20px;
+}
+
+.contactInfo p {
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.contactInfo p:last-child {
+  margin-bottom: 0;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .cookiePage {
+    padding: 100px 0 60px 0;
+  }
+
+  .content {
+    margin: 0 20px;
+    padding: 30px 24px;
+    border-radius: 16px;
+  }
+
+  .section h2 {
+    font-size: 1.3rem;
+  }
+
+  .section h3 {
+    font-size: 1.1rem;
+  }
+
+  .section p,
+  .section li {
+    font-size: 0.95rem;
+  }
+
+  .cookieType {
+    padding: 20px;
+  }
+
+  .tableHeader,
+  .tableRow {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    text-align: left;
+  }
+
+  .tableHeader {
+    display: none; /* Hide header on mobile for better readability */
+  }
+
+  .tableRow {
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: block;
+  }
+
+  .tableRow span {
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .tableRow span:first-child::before {
+    content: 'Cookie: ';
+    color: rgba(255, 255, 255, 0.6);
+    font-family: inherit;
+    font-weight: normal;
+  }
+
+  .tableRow span:nth-child(2)::before {
+    content: 'Purpose: ';
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .tableRow span:last-child::before {
+    content: 'Duration: ';
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .contactInfo {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .content {
+    margin: 0 16px;
+    padding: 24px 20px;
+  }
+
+  .section ul {
+    padding-left: 20px;
+  }
+
+  .cookieType {
+    padding: 16px;
+  }
+}
