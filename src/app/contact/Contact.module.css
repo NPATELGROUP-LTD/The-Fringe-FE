@@ -194,45 +194,314 @@
     line-height: 1.6;
 }
 
-/* Mobile Responsive */
-@media (max-width: 768px) {
+/* ==============================================
+   RESPONSIVE DESIGN
+   ============================================== */
+
+/* Extra Large Desktop (≥1440px) */
+@media (min-width: 1440px) {
+    .pageTitle {
+        font-size: 5rem;
+    }
+
+    .pageSubtitle {
+        font-size: 1.4rem;
+        max-width: 700px;
+    }
+
     .contactContainer {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-2xl);
+        gap: 4rem;
+    }
+
+    .sectionTitle {
+        font-size: 2.5rem;
+    }
+
+    .faqGrid {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    }
+}
+
+/* Large Desktop (1200px - 1439px) */
+@media (min-width: 1200px) and (max-width: 1439px) {
+    .pageTitle {
+        font-size: 4.5rem;
+    }
+
+    .pageSubtitle {
+        font-size: 1.3rem;
+    }
+
+    .contactContainer {
+        gap: 3.5rem;
+    }
+
+    .sectionTitle {
+        font-size: 2.3rem;
+    }
+
+    .faqGrid {
+        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    }
+}
+
+/* Medium Desktop (992px - 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .pageTitle {
+        font-size: 4rem;
+    }
+
+    .pageSubtitle {
+        font-size: 1.2rem;
+    }
+
+    .contactContainer {
+        gap: 3rem;
+    }
+
+    .sectionTitle {
+        font-size: 2.1rem;
+    }
+}
+
+/* Small Desktop/Large Tablet (769px - 991px) */
+@media (min-width: 769px) and (max-width: 991px) {
+    .contactPage {
+        padding-top: 90px;
     }
 
     .pageTitle {
-        font-size: var(--font-size-4xl);
+        font-size: 3.5rem;
+    }
+
+    .contactContainer {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    .sectionTitle {
+        font-size: 2rem;
+    }
+
+    .faqGrid {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    }
+}
+
+/* Mobile Landscape (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    .contactPage {
+        padding-top: 85px;
+    }
+
+    .hero {
+        margin-bottom: 2.5rem;
+        padding: 2.5rem 0;
+    }
+
+    .pageTitle {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .pageSubtitle {
+        font-size: 1.1rem;
+    }
+
+    .contactContainer {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .sectionTitle {
+        font-size: 1.8rem;
+        margin-bottom: 1.2rem;
     }
 
     .contactInfo,
     .contactForm {
-        padding: var(--spacing-lg);
+        padding: 1.2rem;
     }
 
     .infoItem {
         flex-direction: column;
         text-align: center;
-        gap: var(--spacing-md);
+        gap: 0.8rem;
+    }
+
+    .infoIcon {
+        font-size: 1.8rem;
     }
 
     .faqGrid {
         grid-template-columns: 1fr;
+        gap: 1.2rem;
+    }
+
+    .faqSection {
+        padding: 2.5rem 0;
     }
 }
 
-@media (max-width: 480px) {
+/* Mobile Portrait (320px - 480px) */
+@media (min-width: 320px) and (max-width: 480px) {
     .contactPage {
         padding-top: 80px;
     }
 
     .hero {
-        padding: var(--spacing-2xl) 0;
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+    }
+
+    .pageTitle {
+        font-size: 2.5rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .pageSubtitle {
+        font-size: 1rem;
+    }
+
+    .contactContainer {
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .sectionTitle {
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
     }
 
     .infoCard,
     .emergencyContact,
     .contactForm {
-        padding: var(--spacing-md);
+        padding: 1rem;
+    }
+
+    .infoItem {
+        margin-bottom: 1.2rem;
+    }
+
+    .infoIcon {
+        font-size: 1.6rem;
+    }
+
+    .infoContent h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .infoContent p {
+        font-size: 0.95rem;
+    }
+
+    .emergencyContact h3 {
+        font-size: 1.1rem;
+    }
+
+    .emergencyContact p {
+        font-size: 0.95rem;
+    }
+
+    .formGroup label {
+        font-size: 0.85rem;
+    }
+
+    .faqSection {
+        padding: 2rem 0;
+    }
+
+    .faqGrid {
+        gap: 1rem;
+    }
+
+    .faqItem {
+        padding: 1rem;
+    }
+
+    .faqItem h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .faqItem p {
+        font-size: 0.95rem;
+    }
+}
+
+/* Extra Small Mobile (≤320px) */
+@media (max-width: 320px) {
+    .contactPage {
+        padding-top: 75px;
+    }
+
+    .hero {
+        padding: 1.5rem 0;
+        margin-bottom: 1.5rem;
+    }
+
+    .pageTitle {
+        font-size: 2rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .pageSubtitle {
+        font-size: 0.95rem;
+    }
+
+    .contactContainer {
+        gap: 1.2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .sectionTitle {
+        font-size: 1.4rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .infoCard,
+    .emergencyContact,
+    .contactForm {
+        padding: 0.8rem;
+    }
+
+    .infoIcon {
+        font-size: 1.5rem;
+    }
+
+    .infoContent h3 {
+        font-size: 1rem;
+    }
+
+    .infoContent p {
+        font-size: 0.9rem;
+    }
+
+    .faqSection {
+        padding: 1.5rem 0;
+    }
+
+    .faqItem {
+        padding: 0.8rem;
+    }
+
+    .faqItem h3 {
+        font-size: 1rem;
+    }
+
+    .faqItem p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .faqItem {
+        transition: none;
+    }
+
+    .faqItem:hover {
+        transform: none;
     }
 }
