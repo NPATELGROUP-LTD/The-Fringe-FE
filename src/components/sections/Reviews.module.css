@@ -75,13 +75,255 @@
     border-radius: 25px;
 }
 
-@media (max-width: 768px) {
+/* ==============================================
+   RESPONSIVE DESIGN
+   ============================================== */
+
+/* Extra Large Desktop (≥1440px) */
+@media (min-width: 1440px) {
+    .title {
+        font-size: 4.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .subtitle {
+        font-size: 1.4rem;
+        max-width: 700px;
+    }
+
     .reviewGrid {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-lg);
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 2.5rem;
+    }
+
+    .reviewCard {
+        padding: 2.5rem;
+        border-radius: 24px;
+    }
+
+    .reviewText {
+        font-size: 1.25rem;
+        line-height: 1.7;
+    }
+
+    .reviewerName {
+        font-size: 1.1rem;
+    }
+}
+
+/* Large Desktop (1200px - 1439px) */
+@media (min-width: 1200px) and (max-width: 1439px) {
+    .title {
+        font-size: 4rem;
+        margin-bottom: 1.3rem;
+    }
+
+    .subtitle {
+        font-size: 1.3rem;
+        max-width: 650px;
+    }
+
+    .reviewGrid {
+        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+        gap: 2rem;
+    }
+
+    .reviewCard {
+        padding: 2.2rem;
+    }
+
+    .reviewText {
+        font-size: 1.15rem;
+    }
+}
+
+/* Medium Desktop (992px - 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .title {
+        font-size: 3.5rem;
+    }
+
+    .subtitle {
+        font-size: 1.2rem;
+        max-width: 600px;
+    }
+
+    .reviewGrid {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 1.8rem;
+    }
+
+    .reviewText {
+        font-size: 1.1rem;
+    }
+}
+
+/* Small Desktop/Large Tablet (769px - 991px) */
+@media (min-width: 769px) and (max-width: 991px) {
+    .title {
+        font-size: 3rem;
+    }
+
+    .subtitle {
+        font-size: 1.15rem;
+        max-width: 550px;
+    }
+
+    .reviewGrid {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .reviewCard {
+        padding: 1.8rem;
+    }
+
+    .reviewText {
+        font-size: 1.05rem;
+    }
+}
+
+/* Mobile Landscape (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    .header {
+        margin-bottom: 2.5rem;
     }
 
     .title {
-        font-size: var(--font-size-3xl);
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+        max-width: 500px;
+    }
+
+    .reviewGrid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .reviewCard {
+        padding: 1.5rem;
+        border-radius: 18px;
+    }
+
+    .reviewText {
+        font-size: 1rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .stars {
+        margin-bottom: 1rem;
+        font-size: 1rem;
+    }
+
+    .reviewerName {
+        font-size: 1rem;
+    }
+
+    .reviewerService {
+        font-size: 0.9rem;
+    }
+}
+
+/* Mobile Portrait (320px - 480px) */
+@media (min-width: 320px) and (max-width: 480px) {
+    .header {
+        margin-bottom: 2rem;
+    }
+
+    .title {
+        font-size: 2rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+        max-width: 100%;
+    }
+
+    .reviewGrid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+    }
+
+    .reviewCard {
+        padding: 1.3rem;
+        border-radius: 16px;
+    }
+
+    .stars {
+        margin-bottom: 0.8rem;
+        font-size: 0.95rem;
+    }
+
+    .reviewText {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+    }
+
+    .reviewerName {
+        font-size: 0.95rem;
+    }
+
+    .reviewerService {
+        font-size: 0.85rem;
+    }
+}
+
+/* Extra Small Mobile (≤320px) */
+@media (max-width: 320px) {
+    .header {
+        margin-bottom: 1.5rem;
+    }
+
+    .title {
+        font-size: 1.75rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .subtitle {
+        font-size: 0.95rem;
+    }
+
+    .reviewGrid {
+        gap: 1rem;
+    }
+
+    .reviewCard {
+        padding: 1.1rem;
+        border-radius: 14px;
+    }
+
+    .stars {
+        font-size: 0.9rem;
+    }
+
+    .reviewText {
+        font-size: 0.9rem;
+        line-height: 1.4;
+        margin-bottom: 0.8rem;
+    }
+
+    .reviewerName {
+        font-size: 0.9rem;
+    }
+
+    .reviewerService {
+        font-size: 0.8rem;
+    }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .reviewCard {
+        transition: none;
+    }
+
+    .reviewCard:hover {
+        transform: none;
     }
 }

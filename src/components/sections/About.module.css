@@ -67,10 +67,123 @@
     transition: all 0.3s ease;
 }
 
-@media (max-width: 768px) {
+/* ==============================================
+   RESPONSIVE DESIGN
+   ============================================== */
+
+/* Extra Large Desktop (≥1440px) */
+@media (min-width: 1440px) {
+    .content {
+        gap: 5rem;
+    }
+
+    .title {
+        font-size: 4rem;
+        margin-bottom: 2rem;
+    }
+
+    .description {
+        font-size: 1.3rem;
+        line-height: 1.9;
+    }
+
+    .imageContent img {
+        height: 450px;
+        border-radius: 24px;
+    }
+
+    .statNumber {
+        font-size: 3.5rem;
+    }
+
+    .statLabel {
+        font-size: 1rem;
+    }
+}
+
+/* Large Desktop (1200px - 1439px) */
+@media (min-width: 1200px) and (max-width: 1439px) {
+    .content {
+        gap: 4rem;
+    }
+
+    .title {
+        font-size: 3.5rem;
+    }
+
+    .description {
+        font-size: 1.25rem;
+    }
+
+    .imageContent img {
+        height: 420px;
+    }
+
+    .statNumber {
+        font-size: 3rem;
+    }
+}
+
+/* Medium Desktop (992px - 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .content {
+        gap: 3rem;
+    }
+
+    .title {
+        font-size: 3rem;
+    }
+
+    .description {
+        font-size: 1.15rem;
+    }
+
+    .imageContent img {
+        height: 380px;
+    }
+
+    .statNumber {
+        font-size: 2.75rem;
+    }
+}
+
+/* Small Desktop/Large Tablet (769px - 991px) */
+@media (min-width: 769px) and (max-width: 991px) {
     .content {
         grid-template-columns: 1fr;
-        gap: var(--spacing-2xl);
+        gap: 2.5rem;
+    }
+
+    .textContent {
+        padding-right: 0;
+    }
+
+    .title {
+        font-size: 2.8rem;
+    }
+
+    .description {
+        font-size: 1.1rem;
+    }
+
+    .imageContent img {
+        height: 350px;
+    }
+
+    .stats {
+        gap: 2rem;
+    }
+
+    .statNumber {
+        font-size: 2.5rem;
+    }
+}
+
+/* Mobile Landscape (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    .content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
     }
 
     .textContent {
@@ -83,16 +196,131 @@
     }
 
     .title {
-        font-size: var(--font-size-3xl);
+        font-size: 2.4rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .description {
+        font-size: 1.05rem;
+        line-height: 1.7;
+    }
+
+    .imageContent img {
+        height: 300px;
+        border-radius: 16px;
     }
 
     .stats {
         justify-content: space-around;
-        gap: var(--spacing-md);
+        gap: 1rem;
+    }
+
+    .statNumber {
+        font-size: 2.2rem;
+    }
+
+    .statLabel {
+        font-size: 0.85rem;
+    }
+}
+
+/* Mobile Portrait (320px - 480px) */
+@media (min-width: 320px) and (max-width: 480px) {
+    .content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .textContent {
+        padding-right: 0;
+        order: 2;
+    }
+
+    .imageContent {
+        order: 1;
+    }
+
+    .title {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .description {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+
+    .imageContent img {
+        height: 250px;
+        border-radius: 12px;
+    }
+
+    .stats {
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .stat {
+        width: 100%;
+    }
+
+    .statNumber {
+        font-size: 2rem;
+    }
+
+    .statLabel {
+        font-size: 0.8rem;
+    }
+}
+
+/* Extra Small Mobile (≤320px) */
+@media (max-width: 320px) {
+    .content {
+        gap: 1.2rem;
+    }
+
+    .title {
+        font-size: 1.75rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .description {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+
+    .imageContent img {
+        height: 220px;
+    }
+
+    .stats {
+        gap: 1.2rem;
+        margin-top: 1.2rem;
+    }
+
+    .statNumber {
+        font-size: 1.8rem;
+    }
+
+    .statLabel {
+        font-size: 0.75rem;
     }
 }
 
 .imageContent img:hover {
     transform: scale(1.02);
     border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .imageContent img {
+        transition: none;
+    }
+
+    .imageContent img:hover {
+        transform: none;
+    }
 }
